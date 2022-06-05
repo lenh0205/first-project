@@ -1,21 +1,21 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import SignIn from './pages/Auth/SignIn';
-import SignUp from './pages/Auth/SignUp';
-import Home from './pages/Home/Home';
-import Main from '~/pages/Content/Main';
-import Search from '~/pages/Content/Search';
-import Library from '~/pages/Content/Library';
-import LikeSong from '~/pages/Content/LikeSong';
+import { Route, Routes } from 'react-router-dom';
+import LikeSong from '~/pages/Main/LikeSong';
+import Library from '~/pages/Main/Library/Library';
+import Search from '~/pages/Main/Search/Search';
+import SignIn from '~/pages/Auth/SignIn';
+import SignUp from '~/pages/Auth/SignUp';
+import Main from './pages/Main';
+import Home from './pages/Main/Home';
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Home />}>
-        <Route index element={<Main />}></Route>
-        <Route path="search" element={<Search/>} />
-        <Route path="library" element={<Library/>} />
-        <Route path="likesong" element={<LikeSong/>} />
+      <Route path="/" element={<Main />}>
+        <Route index element={<Home />}></Route>
+        <Route path="search" element={<Search />} />
+        <Route path="library" element={<Library />} />
+        <Route path="likesong" element={<LikeSong />} />
       </Route>
       <Route path="/signup" element={<SignUp />} />
       <Route path="/login" element={<SignIn />} />

@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import axios from "axios";
 import ToppicSong from '~/components/ToppicSong';
 
-export default function Main() {
+export default function Home() {
   const [toppics, setToppics] = useState([])
   const [playlists, setPlaylists] = useState([])
 

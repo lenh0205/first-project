@@ -5,8 +5,7 @@ import Drawer from '~/components/Drawer';
 import AppBar from '~/components/AppBar';
 
 
-
-export default function Home() {
+export default function Main() {
     const [open, setOpen] = useState(true);
     const [mode, setMode] = useState('light')
 
