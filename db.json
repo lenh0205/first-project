@@ -1,0 +1,135 @@
+{
+  "topic": [
+    {
+      "id": 1,
+      "name": "Lựa chọn của Spotify"
+    },
+    {
+      "id": 2,
+      "name": "Charts"
+    },
+    {
+      "id": 3,
+      "name": "Sleep"
+    },
+    {
+      "id": 4,
+      "name": "Focus"
+    },
+    {
+      "id": 5,
+      "name": "Mood"
+    },
+    {
+      "id": 6,
+      "name": "Popular new releases"
+    }
+  ],
+  "playlist": [
+    {
+      "id": 1,
+      "name": "Hot Hits Vietnam",
+      "sub": "Đông tời Tây, đây là những ca khúc thình hành nhất",
+      "img": "https://i.pinimg.com/originals/d9/ba/b5/d9bab56e1374e974a70263c9677bbd98.jpg"
+    },
+    {
+      "id": 2,
+      "name": "EQUAL Vietnam",
+      "sub": "Cùng tôn vinh tài năng âm nhạc của những nữ nghệ sĩ Việt",
+      "img": "https://i.pinimg.com/originals/09/e8/b3/09e8b335b9f9d6e893db81fc4a613902.jpg"
+    },
+    {
+      "id": 3,
+      "name": "V-Pop Không Thể Thiếu",
+      "sub": "V-pop đã đơm hoa trên những khúc ca này",
+      "img": "https://i.pinimg.com/originals/22/26/57/222657f4edb2881ef8db374cb63aee71.jpg"
+    },
+    {
+      "id": 4,
+      "name": "Pop Rising Vietnam",
+      "sub": "Những ca khúc sẽ thành hit trong nay mai",
+      "img": "https://i.pinimg.com/originals/6f/0f/9e/6f0f9eb914b667cb45379795aed31310.jpg"
+    },
+    {
+      "id": 5,
+      "name": "Thiên Hạ Nghe Gì",
+      "sub": "Những gì mà người bên cạnh bạn đang nghe",
+      "img": "https://i.pinimg.com/originals/d1/2e/4e/d12e4e87e8c58121eb6ab34aa6ad8f3b.jpg"
+    }
+  ],
+
+  "songs": [
+    {
+      "id": 1,
+      "name": "hai mươi hai",
+      "singer": "Hứa Kim Tuyền, AMEE"
+    },
+    {
+      "id": 2,
+      "name": "Ánh Sao Và Bầu Trời",
+      "singer": "T.R.I"
+    },
+    {
+      "id": 3,
+      "name": "Butter",
+      "singer": "BTS"
+    },
+    {
+      "id": 4,
+      "name": "Có em",
+      "singer": "Madihu, LowG"
+    },
+    {
+      "id": 5,
+      "name": "Chìm Sâu",
+      "singer": "RPT MCK, Trung Trần"
+    },
+    {
+      "id": 6,
+      "name": "Có Không Giữ Mất Đừng Tìm",
+      "singer": "Truc Nhan"
+    },
+    {
+      "id": 7,
+      "name": "Angle Baby",
+      "singer": "Troye Sivan"
+    },
+    {
+      "id": 8,
+      "name": "THERE'S NO ONE AT ALL",
+      "singer": "Sơn Tùng M-TP"
+    },
+    {
+      "id": 9,
+      "name": "Ngày Đầu Tiên",
+      "singer": "Đức Phúc"
+    },
+    {
+      "id": 10,
+      "name": "Bước qua nhau",
+      "singer": "Vũ"
+    }
+  ],
+  "link": [
+    {
+      "id": 1,
+      "name": "./assets/videos/song1.mp3"
+    },
+    {
+      "id": 2,
+      "name": "./assets/videos/song2.mp3"
+    },
+    {
+      "id": 3,
+      "name": "./assets/videos/song3.mp3"
+    },
+    {
+      "id": 4,
+      "name": "./assets/videos/song4.mp3"
+    },
+    {
+      "id": 5,
+      "name": "./assets/videos/song5.mp3"
+    }
+  ]
+}
