@@ -2,7 +2,7 @@ import React from 'react'
 import MuiAppBar from '@mui/material/AppBar';
 import { styled } from '@mui/material/styles';
 import MenuIcon from '@mui/icons-material/Menu';
-import { LogoImage } from '../assets/images';
+import { LogoImage } from '../../../assets/images';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';

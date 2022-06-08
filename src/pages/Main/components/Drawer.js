@@ -4,8 +4,7 @@ import { styled } from '@mui/system';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import React from 'react';
 import { mainListItems, secondaryListItems } from './listItems';
-import { LogoImage } from '../assets/images';
-import { ModeNight } from '@mui/icons-material';
+import { LogoImage } from '~/assets/images';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { Link } from 'react-router-dom';
 

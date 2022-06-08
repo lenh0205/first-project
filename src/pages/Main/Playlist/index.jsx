@@ -1,4 +1,5 @@
-import styles from "./LikeSong.module.scss";
+import React, { useEffect, useState } from "react";
+import styles from "./Playlist.module.scss";
 import classNames from "classnames/bind";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -9,25 +10,38 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
+import axios from "axios";
+import Divider from "@mui/material/Divider";
 
 const cx = classNames.bind(styles);
 
-function LikeSong() {
+function Playlist() {
+  const [songs, setSongs] = useState([]);
+  const [likedId, setLikedId] = useState([]);
+  const [liked, setLiked] = useState(false); 
+
+  useEffect(() => {
+    const getSong = async () => {
+      const res = await axios.get("http://localhost:3001/songs");
+      setSongs(res.data);
+    };
+    getSong();
+  }, []);
+
   return (
-    <Grid container direction="column" sx={{ height: "100vh" }}>
+    <React.Fragment>
       {/* title section */}
       <Grid
         container
-        item
-        xs={6}
         spacing={3}
+        height="58vh"
         alignItems="flex-end"
         sx={{ paddingX: 4, paddingBottom: 3 }}
         className={cx("title")}
       >
-        <Grid item xs={2.7} alignItems="flex-end">
+        <Grid item xs={3} alignItems="flex-end">
           <img
-            src="https://t.scdn.co/images/3099b3803ad9496896c43f22fe9be8c4.png"
+            src="https://lh3.googleusercontent.com/pw/AM-JKLXcKGoPwMPD_OsvbRo9XEx2i1vT54NRtOEom-nuywNYPwMJVPPc91v1eMusrS91H39h68wcAtd9r18_cd3d4iiyar6pWVrJU7eQWeeEgC898QeGR-Fxi6iVCM4S9xz0EUyqqFPloWGuGfkFudj0MILU=s625-no?authuser=0"
             alt="liked song"
             className={cx("like-img")}
           />
@@ -53,7 +67,7 @@ function LikeSong() {
       </Grid>
 
       {/* content section */}
-      <Grid item xs={6} className={cx("content")}>
+      <Stack className={cx("content")}>
         <Box sx={{ paddingX: 4, paddingY: 3 }}>
           <PlayButton />
         </Box>
@@ -64,7 +78,6 @@ function LikeSong() {
           direction="row"
           spacing={2}
           paddingX={6}
-          height={36}
           alignItems="center"
         >
           <Grid item xs={0.4}>
@@ -99,50 +112,54 @@ function LikeSong() {
             <AccessTimeIcon fontSize="1.6rem" />
           </Grid>
         </Grid>
+        <Divider />
 
         {/* All songs */}
-        <Stack sx={{ paddingX: 4, paddingTop: 2, paddingBottom: 4 }}>
+        <Box sx={{ paddingX: 4, paddingTop: 2, paddingBottom: 4 }}>
           {/* Each song */}
-          <Grid container spacing={2} height="56px" alignItems="center">
-            <Grid item xs={0.4} >
-              1
+          {songs.map((song, index) => (
+            <Grid key={song.id} container spacing={2} alignItems="center">
+              <Grid item xs={0.4}>
+                {index + 1}
+              </Grid>
+              <Grid
+                item
+                xs={4.8}
+                sx={{ display: "flex", alignItems: "center" }}
+              >
+                <Avatar variant="square" alt="song image" src={song.img} />
+                <Stack paddingLeft={2}>
+                  <Typography variant="subtitle1">{song.name}</Typography>
+                  <Typography variant="body2">{song.singer}</Typography>
+                </Stack>
+              </Grid>
+              <Grid item xs={3}>
+                <Typography variant="body2">{song.album}</Typography>
+              </Grid>
+              <Grid item xs={2.2}>
+                <Typography variant="body2">4 day ago</Typography>
+              </Grid>
+              <Grid
+                item
+                xs={1.6}
+                sx={{ display: "flex", alignItems: "center", gap: 2.5 }}
+              >
+                <Box>
+                  <IconButton
+                    sx={{ color: (song.liked ? "secondary.main" : "")}}
+                    onClick={() => setLikedId((prev) => [...prev, song.id])}
+                  >
+                    <FavoriteIcon />
+                  </IconButton>
+                </Box>
+                <Box>3:18</Box>
+              </Grid>
             </Grid>
-            <Grid
-              item
-              xs={4.8}
-              sx={{ display: "flex", alignItems: "center" }}
-            >
-              <Avatar
-                variant="square"
-                alt="song image"
-                src="https://i.scdn.co/image/ab67616d0000485166c2e7502496879febc8cccd"
-              />
-              <Stack paddingLeft={2}>
-                <Typography variant="subtitle1">Như con mèo</Typography>
-                <Typography variant="body2">
-                  Tạ Quang Thắng, Kai Đinh
-                </Typography>
-              </Stack>
-            </Grid>
-            <Grid item xs={3}>
-              <Typography variant="body2">The Other Side</Typography>
-            </Grid>
-            <Grid item xs={2.2}>
-              <Typography variant="body2">4 day ago</Typography>
-            </Grid>
-            <Grid item xs={1.6} sx={{ display: "flex", alignItems: "center", gap: 2.5 }}>
-              <Box>
-                <IconButton>
-                  <FavoriteIcon />
-                </IconButton>
-              </Box>
-              <Box>3:18</Box>
-            </Grid>
-          </Grid>
-        </Stack>
-      </Grid>
-    </Grid>
+          ))}
+        </Box>
+      </Stack>
+    </React.Fragment>
   );
 }
 
-export default LikeSong;
+export default Playlist;
