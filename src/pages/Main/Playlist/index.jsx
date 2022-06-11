@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styles from "./Playlist.module.scss";
 import classNames from "classnames/bind";
 import Grid from "@mui/material/Grid";
@@ -12,21 +12,49 @@ import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import axios from "axios";
 import Divider from "@mui/material/Divider";
+import { useDispatch, useSelector } from "react-redux";
+import { setSongs, updateLikedSong } from "~/pages/Main/SongSlice";
+import { useLocation, useParams } from "react-router-dom";
+import songApi from "~/api/songApi";
 
 const cx = classNames.bind(styles);
 
 function Playlist() {
-  const [songs, setSongs] = useState([]);
-  const [likedId, setLikedId] = useState([]);
-  const [liked, setLiked] = useState(false); 
+  const dispatch = useDispatch();
+  const allSongs = useSelector((state) => state.songs);
+
+  const location = useLocation();
+  const playlist = location.state;
+
+  const { playlistId } = useParams();
+
+  let songs = [];
+  if (playlistId === "likedsong") {
+    songs = allSongs.filter((song) => song.liked === true);
+  } else {
+    songs = allSongs;
+  }
 
   useEffect(() => {
-    const getSong = async () => {
-      const res = await axios.get("http://localhost:3001/songs");
-      setSongs(res.data);
+    const fetchSongList = async () => {
+      try {
+        const response = await songApi.getAll();
+        dispatch(setSongs(response))
+      } catch (error) {
+        console.log("Failed to fetch songs list: ", error);
+      }
     };
-    getSong();
+    fetchSongList();
   }, []);
+
+  const handleLikedSong = (id, liked) => {
+    axios
+      .patch(`http://localhost:3001/songs/${id}`, { liked: !liked })
+      .then((res) => {
+        // console.log(res.data);
+        dispatch(updateLikedSong(res.data));
+      });
+  };
 
   return (
     <React.Fragment>
@@ -40,11 +68,7 @@ function Playlist() {
         className={cx("title")}
       >
         <Grid item xs={3} alignItems="flex-end">
-          <img
-            src="https://lh3.googleusercontent.com/pw/AM-JKLXcKGoPwMPD_OsvbRo9XEx2i1vT54NRtOEom-nuywNYPwMJVPPc91v1eMusrS91H39h68wcAtd9r18_cd3d4iiyar6pWVrJU7eQWeeEgC898QeGR-Fxi6iVCM4S9xz0EUyqqFPloWGuGfkFudj0MILU=s625-no?authuser=0"
-            alt="liked song"
-            className={cx("like-img")}
-          />
+          <img src={playlist.img} alt="liked song" className={cx("like-img")} />
         </Grid>
         <Grid container item xs direction="column">
           <Grid item>
@@ -52,8 +76,9 @@ function Playlist() {
           </Grid>
           <Grid item>
             <Typography variant="h1" sx={{ fontWeight: 700 }}>
-              Liked Songs
+              {playlist.name}
             </Typography>
+            <Typography variant="subtitle1">{playlist.sub}</Typography>
           </Grid>
           <Grid item>
             <Typography variant="subtitle2" component="span">
@@ -146,8 +171,8 @@ function Playlist() {
               >
                 <Box>
                   <IconButton
-                    sx={{ color: (song.liked ? "secondary.main" : "")}}
-                    onClick={() => setLikedId((prev) => [...prev, song.id])}
+                    sx={{ color: song.liked ? "secondary.main" : "" }}
+                    onClick={() => handleLikedSong(song.id, song.liked)}
                   >
                     <FavoriteIcon />
                   </IconButton>

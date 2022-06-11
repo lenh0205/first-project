@@ -4,11 +4,15 @@ import App from '~/App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import GlobalStyles from './components/GlobalStyles';
+import { Provider } from 'react-redux'
+import store from '~/app/store'
 
 ReactDOM.render(
   <BrowserRouter>
     <GlobalStyles>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </GlobalStyles>
   </BrowserRouter>,
   document.getElementById('root')

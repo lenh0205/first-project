@@ -17,10 +17,13 @@ function App() {
         <Route path="search" element={<Search />} />
         <Route path="library" element={<Library />} />
         <Route path="likesong" element={<LikeSong />} />
-        <Route path="playlist" element={<Playlist />} />
+        <Route path="playlist" >
+          <Route path=':playlistId' element={<Playlist />}/>
+        </Route>
       </Route>
       <Route path="/signup" element={<SignUp />} />
       <Route path="/login" element={<SignIn />} />
+      <Route path="*" element={<div>Page Not Found</div>} />
     </Routes>
   );
 }
