@@ -13,47 +13,34 @@ import IconButton from "@mui/material/IconButton";
 import axios from "axios";
 import Divider from "@mui/material/Divider";
 import { useDispatch, useSelector } from "react-redux";
-import { setSongs, updateLikedSong } from "~/pages/Main/SongSlice";
+import { fetchAsyncSongs, updateLikedSongs } from "~/pages/Main/SongSlice";
 import { useLocation, useParams } from "react-router-dom";
-import songApi from "~/api/songApi";
 
 const cx = classNames.bind(styles);
 
 function Playlist() {
   const dispatch = useDispatch();
-  const allSongs = useSelector((state) => state.songs);
+  const allSongs = useSelector((state) => state.songs.songs);
 
   const location = useLocation();
   const playlist = location.state;
 
   const { playlistId } = useParams();
 
+  // what kind of this playlist ? liked playlist ? R&B playlist ?
   let songs = [];
   if (playlistId === "likedsong") {
     songs = allSongs.filter((song) => song.liked === true);
   } else {
-    songs = allSongs;
+    songs = allSongs.filter(song => song.playlistId === playlist.id)
   }
 
   useEffect(() => {
-    const fetchSongList = async () => {
-      try {
-        const response = await songApi.getAll();
-        dispatch(setSongs(response))
-      } catch (error) {
-        console.log("Failed to fetch songs list: ", error);
-      }
-    };
-    fetchSongList();
-  }, []);
+      dispatch(fetchAsyncSongs())
+  }, [dispatch]);
 
   const handleLikedSong = (id, liked) => {
-    axios
-      .patch(`http://localhost:3001/songs/${id}`, { liked: !liked })
-      .then((res) => {
-        // console.log(res.data);
-        dispatch(updateLikedSong(res.data));
-      });
+    dispatch(updateLikedSongs({id, liked}))
   };
 
   return (

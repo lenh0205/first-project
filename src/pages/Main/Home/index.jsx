@@ -19,13 +19,13 @@ export default function Home() {
 
   useEffect(() => {
     const getToppic = async () => {
-      const res = await axios.get("http://localhost:3001/topic");
+      const res = await axios.get("https://lenh-json-server.herokuapp.com/api/topic");
       setToppics(res.data);
     };
     getToppic();
 
     const getPlaylist = async () => {
-      const res = await axios.get("http://localhost:3001/playlist");
+      const res = await axios.get("https://lenh-json-server.herokuapp.com/api/playlist");
       setPlaylists(res.data);
     };
     getPlaylist();
@@ -55,7 +55,8 @@ export default function Home() {
               </Typography>
             </Grid>
             {/* Each Song */}
-            {playlists.map((playlist) => (
+            {playlists.filter(playlist => playlist.topicId === toppic.id)
+            .map((playlist) => (
               <Grid item key={playlist.id} xs={12} sm={6} md={4} lg={2.4}>
                 <Card
                   sx={{

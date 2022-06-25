@@ -13,6 +13,9 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link as LinkRoute } from 'react-router-dom'
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 
 function Copyright(props) {
     return (
@@ -32,6 +35,16 @@ const theme = createTheme({
         htmlFontSize: 10
     },
 });
+
+const uiConfig = {
+    signInFlow: 'redirect',
+    signInsuccessUrl: '/',
+    signInOptions: [
+        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+        firebase.auth.FacebookAuthProvider.PROVIDER_ID
+    ],
+};
+
 
 export default function SignIn() {
     const handleSubmit = (event) => {
@@ -59,8 +72,10 @@ export default function SignIn() {
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Sign in
+                        Log in
                     </Typography>
+
+                    <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                         <TextField
                             margin="normal"
@@ -92,7 +107,7 @@ export default function SignIn() {
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                         >
-                            Sign In
+                            Log In
                         </Button>
                         <Grid container>
                             <Grid item xs>

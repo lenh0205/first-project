@@ -1,14 +1,39 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import songApi from "~/api/songApi";
+
+export const fetchAsyncSongs = createAsyncThunk(
+    "songs/fetchAsyncSongs",
+    async () => {
+        const response = await songApi.getAll();
+        return response;
+    }
+);
+export const updateLikedSongs = createAsyncThunk(
+    "songs/updateLikedSongs",
+    async ({id, liked}) => {
+        const response = await songApi.updateLikedSong(id, liked);
+        return response;
+    }
+);
+
 
 const songSlice = createSlice({
     name: 'songs',
-    initialState: [],
+    initialState: {
+        songs: []
+    },
     reducers: {
-        setSongs(state, action) {
-            return action.payload
+         
+    },
+    extraReducers: {
+        [fetchAsyncSongs.fulfilled]: (state, {payload}) => {
+            return {...state, songs: payload}
         },
-        updateLikedSong(state, action) {
-            state.find(song => song.id === action.payload.id).liked = action.payload.liked
+        [fetchAsyncSongs.rejected]: (state, { error }) => {
+            console.log('rejected!', error.message)
+        },
+        [updateLikedSongs.fulfilled]: (state, {payload}) => {
+            state.songs.find(song => song.id === payload.id).liked = payload.liked
         },
     }
 })
