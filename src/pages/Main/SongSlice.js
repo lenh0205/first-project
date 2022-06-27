@@ -10,7 +10,7 @@ export const fetchAsyncSongs = createAsyncThunk(
 );
 export const updateLikedSongs = createAsyncThunk(
     "songs/updateLikedSongs",
-    async ({id, liked}) => {
+    async ({ id, liked }) => {
         const response = await songApi.updateLikedSong(id, liked);
         return response;
     }
@@ -20,23 +20,76 @@ export const updateLikedSongs = createAsyncThunk(
 const songSlice = createSlice({
     name: 'songs',
     initialState: {
-        songs: []
+        songs: [],
+        selectedSong: {
+            song: {},
+            currentIndex: 0
+        },
+        isOpenPlayBack: false,
+        isPlaying: false,
+        isRepeat: false,
+        isRandom: false,
+        oldRandomSongs: []
     },
     reducers: {
-         
+        getSelectedSong(state, { payload }) {
+            state.selectedSong.song = payload.song
+            state.selectedSong.currentIndex = payload.index
+        },
+        toggleIsPlaying(state) {
+            state.isPlaying = !state.isPlaying
+        },
+        openPlayBack(state) {
+            state.isOpenPlayBack = true
+        },
+        nextSong(state, { payload }) {
+            state.selectedSong.song = state.songs.find((song, index) => index === payload + 1)
+            state.selectedSong.currentIndex = payload + 1
+            state.isPlaying = true
+        },
+        prevSong(state, { payload }) {
+            state.selectedSong.song = state.songs.find((song, index) => index === payload - 1)
+            state.selectedSong.currentIndex = payload - 1
+            state.isPlaying = true
+        },
+        toggleIsRepeat(state) {
+            state.isRepeat = !state.isRepeat
+        },
+        toggleIsRamdom(state) {
+            state.isRandom = !state.isRandom
+        },
+        getOldRandomSongs (state, {payload}) {
+            state.oldRandomSongs.push(payload)
+        },
+        nextRamdomSong(state, { payload }) {
+            let randomIndex
+            do {
+                randomIndex = Math.floor(Math.random() * (state.songs.length - 1))
+            } while (state.oldRandomSongs.includes(randomIndex))
+            const nextSong = state.songs.find((song, index) => index === randomIndex)
+            state.selectedSong.song = nextSong
+            state.selectedSong.currentIndex = randomIndex
+            state.isPlaying = true
+        }
     },
     extraReducers: {
-        [fetchAsyncSongs.fulfilled]: (state, {payload}) => {
-            return {...state, songs: payload}
+        [fetchAsyncSongs.fulfilled]: (state, { payload }) => {
+            return { ...state, songs: payload }
         },
         [fetchAsyncSongs.rejected]: (state, { error }) => {
             console.log('rejected!', error.message)
         },
-        [updateLikedSongs.fulfilled]: (state, {payload}) => {
+        [updateLikedSongs.fulfilled]: (state, { payload }) => {
             state.songs.find(song => song.id === payload.id).liked = payload.liked
         },
     }
 })
 const { actions, reducer } = songSlice;
-export const { setSongs, updateLikedSong } = actions;
-export default reducer
+export default reducer;
+export const {
+    getSelectedSong, openPlayBack,
+    toggleIsPlaying,
+    nextSong, prevSong,
+    toggleIsRepeat,
+    toggleIsRamdom, getOldRandomSongs, nextRamdomSong
+} = actions;

@@ -1,46 +1,65 @@
-import React, { useEffect } from "react";
-import styles from "./Playlist.module.scss";
-import classNames from "classnames/bind";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import PlayButton from "~/components/PlayButton";
-import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Avatar from "@mui/material/Avatar";
-import IconButton from "@mui/material/IconButton";
-import axios from "axios";
+import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
+import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import classNames from "classnames/bind";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAsyncSongs, updateLikedSongs } from "~/pages/Main/SongSlice";
 import { useLocation, useParams } from "react-router-dom";
+import PlayButton from "~/components/PlayButton";
+import {
+  fetchAsyncSongs,
+  getSelectedSong,
+  openPlayBack,
+  toggleIsPlaying,
+  updateLikedSongs
+} from "~/pages/Main/SongSlice";
+import styles from "./Playlist.module.scss";
 
 const cx = classNames.bind(styles);
 
 function Playlist() {
   const dispatch = useDispatch();
   const allSongs = useSelector((state) => state.songs.songs);
+  
+  const isPlaying = useSelector(state => state.songs.isPlaying)
+  const currentIndex = useSelector(state => state.songs.selectedSong.currentIndex)
 
   const location = useLocation();
   const playlist = location.state;
 
   const { playlistId } = useParams();
 
-  // what kind of this playlist ? liked playlist ? R&B playlist ?
+  // what kind of this playlist ? liked playlist ? specific playlist ?
   let songs = [];
   if (playlistId === "likedsong") {
     songs = allSongs.filter((song) => song.liked === true);
   } else {
-    songs = allSongs.filter(song => song.playlistId === playlist.id)
+    songs = allSongs.filter((song) => song.playlistId === playlist.id);
   }
 
   useEffect(() => {
-      dispatch(fetchAsyncSongs())
+    dispatch(fetchAsyncSongs());
   }, [dispatch]);
 
   const handleLikedSong = (id, liked) => {
-    dispatch(updateLikedSongs({id, liked}))
+    dispatch(updateLikedSongs({ id, liked }));
+  };
+
+  const handleOpenPlayBack = (song, index) => {
+    // when open the new song - turn off the old song
+    if (currentIndex !== index && isPlaying === true) {
+      dispatch(toggleIsPlaying())
+    }
+    // turn on/off a song
+    dispatch(getSelectedSong({ song, index }));
+    dispatch(openPlayBack())
+    dispatch(toggleIsPlaying());
   };
 
   return (
@@ -131,7 +150,11 @@ function Playlist() {
           {/* Each song */}
           {songs.map((song, index) => (
             <Grid key={song.id} container spacing={2} alignItems="center">
-              <Grid item xs={0.4}>
+              <Grid
+                item
+                xs={0.4}
+                onClick={() => handleOpenPlayBack(song, index)}
+              >
                 {index + 1}
               </Grid>
               <Grid

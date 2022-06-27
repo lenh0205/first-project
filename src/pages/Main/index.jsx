@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import AppBar from "~/pages/Main/components/AppBar";
 import Drawer from "~/pages/Main/components/Drawer";
+import PlayBack from "~/pages/Main/components/PlayBack/PlayBack";
+import { useSelector } from "react-redux";
 
 export default function Main() {
   const [open, setOpen] = useState(true);
   const [mode, setMode] = useState("light");
+
+  const isOpenPlayBack = useSelector(state => state.songs.isOpenPlayBack)
 
   const mdTheme = createTheme({
     typography: {
@@ -67,6 +71,7 @@ export default function Main() {
         >
           <Outlet />
         </Box>
+        {isOpenPlayBack &&  <PlayBack/>}
       </Box>
     </ThemeProvider>
   );

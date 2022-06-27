@@ -29,7 +29,7 @@ const getFirebaseToken = async () => {
                 }
 
                 const token = await user.getIdToken();
-                console.log("[AXIOS] Logged in user token: ", token);
+                // console.log("[AXIOS] Logged in user token: ", token);
                 resolve(token);
 
                 unregisterAuthObserver();
