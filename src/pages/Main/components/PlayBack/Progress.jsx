@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getOldRandomSongs, nextRamdomSong, nextSong } from "~/pages/Main/SongSlice";
 
-const Progress = ({ isPlaying, url, currentIndex }) => {
+const Progress = ({ isPlaying, url, currentIndex, playlistId, volume }) => {
   const [progress, setProgress] = useState(0);
   const audioRef = useRef();
 
@@ -18,6 +18,10 @@ const Progress = ({ isPlaying, url, currentIndex }) => {
       audioRef.current.pause();
     }
   }, [isPlaying, currentIndex]);
+
+  useEffect(() => {
+    audioRef.current.volume = volume / 100
+  }, [volume])
 
   const handleProgress = () => {
     const totalTime = audioRef.current.duration;
@@ -37,7 +41,7 @@ const Progress = ({ isPlaying, url, currentIndex }) => {
       audioRef.current.play();
     } else if (isRandom) {
         dispatch(getOldRandomSongs(currentIndex))
-        dispatch(nextRamdomSong())
+        dispatch(nextRamdomSong(playlistId))
     } else {
       dispatch(nextSong(currentIndex));
     }

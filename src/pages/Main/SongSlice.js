@@ -62,11 +62,12 @@ const songSlice = createSlice({
             state.oldRandomSongs.push(payload)
         },
         nextRamdomSong(state, { payload }) {
+            const newSong = state.songs.filter(song => song.playlistId === payload)
             let randomIndex
             do {
-                randomIndex = Math.floor(Math.random() * (state.songs.length - 1))
+                randomIndex = Math.floor(Math.random() * (newSong.length - 1))
             } while (state.oldRandomSongs.includes(randomIndex))
-            const nextSong = state.songs.find((song, index) => index === randomIndex)
+            const nextSong = {...newSong.find((song, index) => index === randomIndex)}
             state.selectedSong.song = nextSong
             state.selectedSong.currentIndex = randomIndex
             state.isPlaying = true

@@ -26,6 +26,9 @@ import Progress from "./Progress";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import CardMedia from "@mui/material/CardMedia";
+import RepeatOneIcon from "@mui/icons-material/RepeatOne";
+import ShuffleOnIcon from "@mui/icons-material/ShuffleOn";
+import { useState } from "react";
 
 const ControlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -39,11 +42,13 @@ const ControlTooltip = styled(({ className, ...props }) => (
 }));
 
 function PlayBack() {
+  const [volume, setVolume] = useState(50);
+
   const dispatch = useDispatch();
   const { song, currentIndex } = useSelector(
     (state) => state.songs.selectedSong
   );
-  const isPlaying = useSelector((state) => state.songs.isPlaying);
+  const { isPlaying, isRepeat, isRandom } = useSelector((state) => state.songs);
 
   const handleRadomSong = () => {
     dispatch(toggleIsRamdom());
@@ -61,7 +66,6 @@ function PlayBack() {
     >
       <Grid item xs={4} sx={{ display: "flex", alignItems: "center" }}>
         <Box>
-          {/* <img src={song.img} alt="song" /> */}
           <CardMedia
             component="img"
             image={song.img}
@@ -74,10 +78,18 @@ function PlayBack() {
         </Box>
       </Grid>
 
-      <Grid item xs={4}>
+      <Grid
+        item
+        xs={4}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+        }}
+      >
         <Box display="flex" justifyContent="space-evenly">
           <IconButton color="secondary" onClick={handleRadomSong}>
-            <ShuffleIcon />
+            {isRandom ? <ShuffleOnIcon /> : <ShuffleIcon />}
           </IconButton>
           <IconButton
             color="secondary"
@@ -101,7 +113,7 @@ function PlayBack() {
             color="secondary"
             onClick={() => dispatch(toggleIsRepeat())}
           >
-            <RepeatIcon />
+            {isRepeat ? <RepeatOneIcon /> : <RepeatIcon />}
           </IconButton>
         </Box>
 
@@ -109,10 +121,13 @@ function PlayBack() {
           isPlaying={isPlaying}
           url={song.songUrl}
           currentIndex={currentIndex}
+          playlistId={song.playlistId}
+          volume={volume}
+          setVolume={setVolume}
         />
       </Grid>
 
-      <Grid item xs={4} display="flex" alignItems="center" paddingX={10}>
+      <Grid item xs={4} display="flex" alignItems="center" paddingLeft={10}>
         <ControlTooltip title="Lyrics">
           <IconButton color="secondary">
             <LyricsIcon />
@@ -128,9 +143,15 @@ function PlayBack() {
             <DevicesIcon />
           </IconButton>
         </ControlTooltip>
-        <Stack direction="row" flex="1">
-          <VolumeDownIcon color="secondary" />
-          <Slider defaultValue={70} />
+        <Stack direction="row" flex="1" alignItems="center">
+          <ControlTooltip title="Mute">
+            <VolumeDownIcon color="secondary" />
+          </ControlTooltip>
+          <Slider
+            size="small"
+            value={volume}
+            onChange={(e) => setVolume(e.target.value)}
+          />
         </Stack>
       </Grid>
     </Grid>

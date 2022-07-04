@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from "react";
 import { Box, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
-import AppBar from "~/pages/Main/components/AppBar";
 import Drawer from "~/pages/Main/components/Drawer";
 import PlayBack from "~/pages/Main/components/PlayBack/PlayBack";
-import { useSelector } from "react-redux";
 
 export default function Main() {
-  const [open, setOpen] = useState(true);
   const [mode, setMode] = useState("light");
 
-  const isOpenPlayBack = useSelector(state => state.songs.isOpenPlayBack)
+  const isOpenPlayBack = useSelector((state) => state.songs.isOpenPlayBack);
 
   const mdTheme = createTheme({
     typography: {
@@ -37,12 +35,9 @@ export default function Main() {
           }),
       secondary: {
         main: "#1ed760",
-      }
+      },
     },
   });
-  const toggleDrawer = () => {
-    setOpen(!open);
-  };
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -53,13 +48,7 @@ export default function Main() {
       >
         <CssBaseline />
 
-        <Drawer
-          toggleDrawer={toggleDrawer}
-          open={open}
-          mode={mode}
-          setMode={setMode}
-        />
-        <AppBar toggleDrawer={toggleDrawer} open={open} />
+        <Drawer mode={mode} setMode={setMode} />
         <Box
           component="main"
           sx={{
@@ -71,7 +60,7 @@ export default function Main() {
         >
           <Outlet />
         </Box>
-        {isOpenPlayBack &&  <PlayBack/>}
+        {isOpenPlayBack && <PlayBack />}
       </Box>
     </ThemeProvider>
   );
