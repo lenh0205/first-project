@@ -2,7 +2,7 @@ import { Box, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
-import Drawer from "~/pages/Main/components/Drawer";
+import Drawer from "~/pages/Main/components/Drawer/Drawer";
 import PlayBack from "~/pages/Main/components/PlayBack/PlayBack";
 
 export default function Main() {

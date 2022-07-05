@@ -5,7 +5,7 @@ import styles from "./Playlist.module.scss";
 
 const cx = classNames.bind(styles);
 
-function Banner({ playlist }) {
+function Banner({ playlistInfo }) {
   return (
     <Grid
       container
@@ -16,7 +16,7 @@ function Banner({ playlist }) {
       className={cx("title")}
     >
       <Grid item xs={3} alignItems="flex-end">
-        <img src={playlist.img} alt="liked song" className={cx("like-img")} />
+        <img src={playlistInfo.img} alt="liked song" className={cx("like-img")} />
       </Grid>
       <Grid container item xs direction="column">
         <Grid item>
@@ -24,9 +24,9 @@ function Banner({ playlist }) {
         </Grid>
         <Grid item>
           <Typography variant="h1" sx={{ fontWeight: 700 }}>
-            {playlist.name}
+            {playlistInfo.name}
           </Typography>
-          <Typography variant="subtitle1">{playlist.sub}</Typography>
+          <Typography variant="subtitle1">{playlistInfo.sub}</Typography>
         </Grid>
         <Grid item>
           <Typography variant="subtitle2" component="span">

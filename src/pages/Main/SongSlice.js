@@ -83,6 +83,9 @@ const songSlice = createSlice({
         [updateLikedSongs.fulfilled]: (state, { payload }) => {
             state.songs.find(song => song.id === payload.id).liked = payload.liked
         },
+        [updateLikedSongs.rejected]: (state, { error }) => {
+            console.log('rejected!', error.message)
+        }
     }
 })
 const { actions, reducer } = songSlice;

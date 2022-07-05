@@ -1,8 +1,8 @@
 import React from 'react';
 import Box from "@mui/material/Box";
-import AppBar from "~/pages/Main/components/AppBar";
+import AppBar from "~/pages/Main/components/AppBar/AppBar";
 import Navbar from './Navbar';
-import { Navigate, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
 function Library() {
   return (

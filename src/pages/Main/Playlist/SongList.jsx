@@ -1,16 +1,39 @@
-import React from "react";
-import Typography from "@mui/material/Typography";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import Avatar from "@mui/material/Avatar";
-import Stack from "@mui/material/Stack";
 import IconButton from "@mui/material/IconButton";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getSelectedSong,
+  openPlayBack,
+  toggleIsPlaying,
+  updateLikedSongs
+} from "~/pages/Main/SongSlice";
 
-function SongList({ songs, handleLikedSong, handleOpenPlayBack }) {
+function SongList({ songs }) {
+  const dispatch = useDispatch();
+
+  const isPlaying = useSelector((state) => state.songs.isPlaying);
+  const currentIndex = useSelector(
+    (state) => state.songs.selectedSong.currentIndex
+  );
+
+  const handleOpenPlayBack = (song, index) => {
+    // when open the new song - turn off the old song
+    if (currentIndex !== index && isPlaying === true) {
+      dispatch(toggleIsPlaying());
+    }
+    // turn on/off a song
+    dispatch(getSelectedSong({ song, index }));
+    dispatch(openPlayBack());
+    dispatch(toggleIsPlaying());
+  };
+
   return (
     <Box sx={{ paddingX: 4, paddingTop: 2, paddingBottom: 4 }}>
-      {/* Each song */}
       {songs.map((song, index) => (
         <Grid key={song.id} container spacing={2} alignItems="center">
           <Grid item xs={0.4} onClick={() => handleOpenPlayBack(song, index)}>
@@ -37,7 +60,9 @@ function SongList({ songs, handleLikedSong, handleOpenPlayBack }) {
             <Box>
               <IconButton
                 sx={{ color: song.liked ? "secondary.main" : "" }}
-                onClick={() => handleLikedSong(song.id, song.liked)}
+                onClick={() =>
+                  dispatch(updateLikedSongs({ id: song.id, liked: song.liked }))
+                }
               >
                 <FavoriteIcon />
               </IconButton>

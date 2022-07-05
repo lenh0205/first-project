@@ -61,7 +61,7 @@ export default function Drawer({ mode, setMode }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const open = useSelector((state) => state.layout.open);
-  const drawerWidth = useSelector(state => state.layout.drawerWidth)
+  const drawerWidth = useSelector((state) => state.layout.drawerWidth);
 
   return (
     <DrawerCuz variant="permanent" open={open} drawerWidth={drawerWidth}>
@@ -123,21 +123,14 @@ export default function Drawer({ mode, setMode }) {
           </ListItemIcon>
           <ListItemText primary="Create Playlist" />
         </ListItemButtonCuz>
-        <ListItemButtonCuz
-          onClick={() => {
-            navigate("/playlist/likedsong", {
-              state: {
-                name: "Liked Songs",
-                img: "https://lh3.googleusercontent.com/VrJUrWltEytSUtixqAw6gwbVQLSEX8pKLFkrWngNcXBUg1YYyMsrKenpLOIvZHbsd_S4g_qoYc9OjG7NgL-z2J9GNwyRHBtmbOLM4nE5s9oJpMRDrVZvcE0NQBS1B2AdLG64zhcENS4GVZ6st0qL6lYHsAcuYcDyCsMsuERsAYNARc8qWx_23oO4mNSprrJdDG7kpsHyJGwyI44ZNlS9hght5nUm3zoY6TvWnXb1I2fWFIBqy8PD2_tQblBZoBW6M2Zv2asbJBggKixRZmbCCBwnvBWl0y98_18yn73RwZGizKSTLPdh0Pv4ub3Rz6j6xgbp4K9iljwtBjQ-N0DUR38CB2aic1r3Y9azeZQUBkDx-wQ4_wCcpHs2n1WNcwUpHULA97hXgoAhrSftTqV840qiQ1yQV-9cxD_06Aw8-cSPWA95m6pRHJsFUUbw1MGyT_K8aV3DIVMz_TMo7rDqIlaFRCB2bkrrANFlLcADZcmZ1oK-0zOHluT9v2Tdpk0rhAkuaeMEjZCgo117_nnQp7PSX0bbOqu2pmLNi-wxxdb96MPYBT9Sa-BXXB85wcbkBIgJkUQg7p8B5JV4EXn98yAtRQjIT1BKBDOpY9WXKwtyTBs0NQJUTp8TlEn1718At1Ogpryi7IUvgtAoRJb40UdRg4EVzNi1WjUQ7itpJWsNLZ_1sqT0y7hCrreVftahkG53V1wx8P5r7pSPUCMUwLOVg3xo0DSo5LKnqxNlfiL_xh-fAt-ZK3SWhHGlN5lCrglcRJ_pPz6ATGk9H5cP6s86ZXphrq0KliA=s300-no?authuser=0",
-              },
-            });
-          }}
-        >
-          <ListItemIcon>
-            <FavoriteBorderIcon />
-          </ListItemIcon>
-          <ListItemText primary="Liked Songs" />
-        </ListItemButtonCuz>
+        <Link to="/collection/tracks">
+          <ListItemButtonCuz>
+            <ListItemIcon>
+              <FavoriteBorderIcon />
+            </ListItemIcon>
+            <ListItemText primary="Liked Songs" />
+          </ListItemButtonCuz>
+        </Link>
         <Divider sx={{ mx: 3 }} />
 
         <ListItemButton component="a" href="#simple-list">

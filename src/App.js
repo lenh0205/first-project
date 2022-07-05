@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
 import LikeSong from '~/pages/Main/LikeSong';
 import Library from '~/pages/Main/Library';
 import Search from '~/pages/Main/Search';
@@ -46,8 +46,8 @@ function App() {
       <Route path="/" element={<Main />}>
         <Route index element={<Home />} />
         <Route path="search" element={<Search />} />
-        <Route path="likesong" element={<LikeSong />} />
-        <Route path="playlist" >
+        <Route path="playlist">
+          <Route index element={<div>Nothing here</div>}/>
           <Route path=':playlistId' element={<Playlist />} />
         </Route>
         <Route path="collection" element={<Library />}>
@@ -57,7 +57,7 @@ function App() {
           <Route path="artists" element={<ArtistCollection />} />
           <Route path="albums" element={<AlbumCollection />} />
         </Route>
-        {/* <Route path="collection" element={<Navigate replace to="/collection/playlists" />} /> */}
+        <Route path="collection/tracks" element={<LikeSong/>} />
       </Route>
       <Route path="/signup" element={<SignUp />} />
       <Route path="/login" element={<SignIn />} />
