@@ -1,3 +1,4 @@
+import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
@@ -10,18 +11,19 @@ import FormHelperText from '@mui/material/FormHelperText';
 import FormLabel from '@mui/material/FormLabel';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
+import LinkMui from '@mui/material/Link';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
-import { useFormik } from 'formik';
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import { Link } from 'react-router-dom';
-import * as Yup from 'yup';
+import { useState } from 'react';
+import { Link, useLocation, useNavigate, useOutletContext } from 'react-router-dom';
 import { LogoImage } from '~/assets/images';
+import { useUserAuth } from '~/context/UserAuthContext';
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
 
 const theme = createTheme({
     typography: {
@@ -39,19 +41,35 @@ const LongButton = styled(Button)({
 
 })
 
-const uiConfig = {
-    signInFlow: 'redirect',
-    signInsuccessUrl: '/',
-    signInOptions: [
-        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-        firebase.auth.FacebookAuthProvider.PROVIDER_ID
-    ],
-};
+// const uiConfig = {
+//     signInFlow: 'redirect',
+//     signInsuccessUrl: '/',
+//     signInOptions: [
+//         firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+//         firebase.auth.FacebookAuthProvider.PROVIDER_ID
+//     ],
+// };
 
-const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+const months = [
+    'January', 'February', 'March', 'April',
+    'May', 'June', 'July', 'August',
+    'September', 'October', 'November', 'December'
+]
 
 export default function SignUp() {
+    const [error, setError] = useState("");
+    const { signUp } = useUserAuth();
+    const navigate = useNavigate();
 
+    const handleSubmit = async (value) => {
+        setError("");
+        try {
+            await signUp(value.email, value.password);
+            navigate("/login");
+        } catch (err) {
+            setError(err.message);
+        }
+    }
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -72,6 +90,7 @@ export default function SignUp() {
                 .string()
                 .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,18}$/, 'Invalid password')
                 .required('You need to enter a password.'),
+            // Minimum eight and maximum 18 characters, at least one uppercase letter, one lowercase letter, one number and one special character
             confirmedPassword: Yup
                 .string()
                 .oneOf([Yup.ref("password"), null], "Password must match")
@@ -84,9 +103,7 @@ export default function SignUp() {
             year: Yup.string().matches(/^(19|20)[\d]{2,2}$/, 'Invalid year').required('Enter a valid year'),
             gender: Yup.string().required('Select your gender')
         }),
-        onSubmit: (values) => {
-            alert(JSON.stringify(values, null, 2));
-        },
+        onSubmit: handleSubmit
     });
 
     return (
@@ -113,7 +130,7 @@ export default function SignUp() {
                         Sign up for free to start listening
                     </Typography>
 
-                    <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+                    {/* <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} /> */}
 
                     <Divider sx={{ width: 0.9, mt: 3 }}>or</Divider>
                     <Box component="form" noValidate onSubmit={formik.handleSubmit} sx={{ mt: 3 }}>
@@ -261,6 +278,7 @@ export default function SignUp() {
                                 />
                             </Grid>
                         </Grid>
+                        {error && <Alert severity="warning">{error}</Alert>}
                         <Button
                             type="submit"
                             fullWidth
@@ -271,7 +289,10 @@ export default function SignUp() {
                         </Button>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
-                                <Link to="/signin">Already have an account? Log in</Link>
+                                Already have an account? &nbsp;
+                                <LinkMui component={Link} to="/login">
+                                    Log in
+                                </LinkMui>
                             </Grid>
                         </Grid>
                     </Box>

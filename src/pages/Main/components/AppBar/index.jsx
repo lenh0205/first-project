@@ -1,20 +1,19 @@
-import React from "react";
-import MuiAppBar from "@mui/material/AppBar";
-import { styled } from "@mui/material/styles";
-import MenuIcon from "@mui/icons-material/Menu";
-import { LogoImage } from "../../../../assets/images";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Chip from "@mui/material/Chip";
+import MenuIcon from "@mui/icons-material/Menu";
+import MuiAppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { toggleDrawer } from "~/pages/Main/layoutSlice";
-import Box from "@mui/material/Box";
+import Chip from "@mui/material/Chip";
 import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
+import { styled } from "@mui/material/styles";
+import Toolbar from "@mui/material/Toolbar";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { useUserAuth } from "~/context/UserAuthContext";
+import { toggleDrawer } from "~/pages/Main/layoutSlice";
+import { LogoImage } from "../../../../assets/images";
 
 const currentUser = true;
 
@@ -46,6 +45,8 @@ const ButtonCuz = styled(Button)({
 });
 
 export default function AppBar({ children }) {
+  const { user } = useUserAuth();
+  
   const open = useSelector((state) => state.layout.open);
   const drawerWidth = useSelector((state) => state.layout.drawerWidth);
   const dispatch = useDispatch();
@@ -94,7 +95,7 @@ export default function AppBar({ children }) {
             {children}
           </Grid>
           <Grid item xs={3} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-            {currentUser ? (
+            {user ? (
               <React.Fragment>
                 <Chip
                   label="Upgrade"

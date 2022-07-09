@@ -1,17 +1,22 @@
+import axios from "axios";
 import axiosClient from "./axiosClient";
 
 const playlistApi = {
-    getAll (params) {
+    getAll(params) {
         const url = '/playlist';
-        return axiosClient.get(url, {params});
+        return axiosClient.get(url, { params });
     },
     get(id) {
         const url = `/playlist/${id}`
         return axiosClient.get(url)
     },
-    updateLikedPlaylist (id, liked) {
+    add(data) {
+        const url = '/playlist';
+        return axiosClient.post(url, data)
+    },
+    updateLikedPlaylist(id, liked) {
         const url = `/playlist/${id}`
-        return axiosClient.patch(url, {liked: !liked})
+        return axiosClient.patch(url, { liked: !liked })
     }
 }
 export default playlistApi

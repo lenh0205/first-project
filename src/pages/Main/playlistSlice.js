@@ -8,7 +8,6 @@ export const fetchAsyncPlaylists = createAsyncThunk(
         return response;
     }
 );
-
 export const updateLikedPlaylists = createAsyncThunk(
     "playlists/updateLikedPlaylists",
     async ({ id, liked }) => {
@@ -16,7 +15,6 @@ export const updateLikedPlaylists = createAsyncThunk(
         return response;
     }
 );
-
 export const fetchSelectedPlaylist = createAsyncThunk(
     'playlists/fetchSelectedPlaylist',
     async (id) => {
@@ -25,14 +23,30 @@ export const fetchSelectedPlaylist = createAsyncThunk(
     }
 )
 
+export const createNewPlaylist = createAsyncThunk(
+    'playlists/createNewPlaylist',
+    async (data) => {
+        const response = await playlistApi.add(data);
+        return response;
+    }
+)
+
 const playlistSlice = createSlice({
     name: 'playlists',
     initialState: {
         playlists: [],
-        selectedPlaylist: {}
+        selectedPlaylist: {},
+        likedSongPlaylistInfo: {
+            name: "Liked Songs",
+            sub: "",
+            img: "https://t.scdn.co/images/3099b3803ad9496896c43f22fe9be8c4.png"
+        },
+        newPlaylistNumberOrder: 1
     },
     reducers: {
-
+        increasePlaylistNumberOrder (state, {payload}) {
+            state.newPlaylistNumberOrder = payload
+        }
     },
     extraReducers: {
         [fetchAsyncPlaylists.fulfilled]: (state, { payload }) => {
@@ -52,9 +66,15 @@ const playlistSlice = createSlice({
         },
         [fetchSelectedPlaylist.rejected]: (state, { error }) => {
             console.log('rejected!', error.message)
+        },
+        [createNewPlaylist.fulfilled]: (state, { payload }) => {
+            state.playlists.push(payload)
+        },
+        [createNewPlaylist.rejected]: (state, { error }) => {
+            console.log('rejected!', error)
         }
     }
 })
 const { actions, reducer } = playlistSlice;
 export default reducer;
-export const { } = actions;
+export const { increasePlaylistNumberOrder } = actions;

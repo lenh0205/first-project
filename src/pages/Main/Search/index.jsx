@@ -1,6 +1,6 @@
 import React from 'react';
 import Box from "@mui/material/Box";
-import AppBar from "~/pages/Main/components/AppBar/AppBar";
+import AppBar from "~/pages/Main/components/AppBar";
 import SearchBox from './SearchBox';
 import Content from './Content';
 

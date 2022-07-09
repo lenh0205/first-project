@@ -4,7 +4,7 @@ import classNames from "classnames/bind";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import AppBar from "~/pages/Main/components/AppBar/AppBar.jsx";
+import AppBar from "~/pages/Main/components/AppBar/index.jsx";
 import { fetchAsyncSongs } from "~/pages/Main/SongSlice";
 import { fetchSelectedPlaylist } from "~/pages/Main/playlistSlice";
 import Banner from "./Banner";

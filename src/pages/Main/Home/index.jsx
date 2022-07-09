@@ -1,10 +1,10 @@
 
-import Container from "@mui/material/Container";
+import Container from "@mui/material/Container"; 
 import Grid from "@mui/material/Grid";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
-import AppBar from "~/pages/Main/components/AppBar/AppBar";
+import AppBar from "~/pages/Main/components/AppBar";
 import TopicTitle from "./TopicTitle";
 import TopicPlaylists from "./TopicPlaylists";
 import { useDispatch, useSelector } from "react-redux";

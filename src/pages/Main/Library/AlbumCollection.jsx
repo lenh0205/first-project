@@ -1,9 +1,18 @@
-import React from 'react'
+import React from "react";
+import AlbumIcon from "@mui/icons-material/Album";
+import NonFollow from "./NonFollow";
 
 function AlbumCollection() {
+  const album = false;
   return (
-    <div>AlbumCollection</div>
-  )
+    <React.Fragment>
+      {album ? (
+        <div>Some Album</div>
+      ) : (
+        <NonFollow icon={<AlbumIcon />} name="album" />
+      )}
+    </React.Fragment>
+  );
 }
 
-export default AlbumCollection
+export default AlbumCollection;
