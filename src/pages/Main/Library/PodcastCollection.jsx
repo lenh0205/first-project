@@ -9,7 +9,7 @@ function PodcastCollection() {
       {podcard ? (
         <div>Some PodCast</div>
       ) : (
-        <NonFollow icon={<PodcastsIcon />} name="podcast" />
+        <NonFollow icon={<PodcastsIcon sx={{ fontSize: 70}}/>} name="podcast" />
       )}
     </React.Fragment>
   );

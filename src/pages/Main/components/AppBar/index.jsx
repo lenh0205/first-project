@@ -1,9 +1,6 @@
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import MenuIcon from "@mui/icons-material/Menu";
 import MuiAppBar from "@mui/material/AppBar";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import Chip from "@mui/material/Chip";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import { styled } from "@mui/material/styles";
@@ -15,6 +12,7 @@ import { useMainPageContext } from "~/context/MainPageContext";
 import { useUserAuth } from "~/context/UserAuthContext";
 import { toggleDrawer } from "~/pages/Main/layoutSlice";
 import { LogoImage } from "../../../../assets/images";
+import UserSetting from "./UserSetting";
 
 const AppBarCuz = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open" && prop !== "drawerWidth",
@@ -128,34 +126,7 @@ export default function AppBar({ children }) {
             }}
           >
             {user ? (
-              <React.Fragment>
-                <Chip
-                  label="Upgrade"
-                  variant="outlined"
-                  color="secondary"
-                  onClick={() => console.log("premium")}
-                  sx={{
-                    marginRight: "30px",
-                    width: "90px",
-                    fontSize: "1.4rem",
-                    fontWeight: "700",
-                  }}
-                />
-                <Chip
-                  avatar={<Avatar src={"chưa có"} />}
-                  label="Avatar"
-                  variant="outlined"
-                  onDelete={() => console.log("user menu")}
-                  deleteIcon={<ArrowDropDownIcon />}
-                  sx={{
-                    fontSize: "1.4rem",
-                    marginRight: "6px",
-                    minWidth: "147px",
-                    fontWeight: "700",
-                    justifyContent: "space-between",
-                  }}
-                />
-              </React.Fragment>
+                <UserSetting/>
             ) : (
               <React.Fragment>
                 <Link to="/signup">

@@ -9,7 +9,7 @@ function AlbumCollection() {
       {album ? (
         <div>Some Album</div>
       ) : (
-        <NonFollow icon={<AlbumIcon />} name="album" />
+        <NonFollow icon={<AlbumIcon sx={{ fontSize: 70}}/>} name="album" />
       )}
     </React.Fragment>
   );

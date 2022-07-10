@@ -1,7 +1,7 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
-import ButtonBase from '@mui/material/ButtonBase';
+import ButtonBase from "@mui/material/ButtonBase";
 
 function NonFollow({ icon, name }) {
   return (
@@ -12,14 +12,28 @@ function NonFollow({ icon, name }) {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
+        transform: "translateY(-20%)",
       }}
     >
       <Box>{icon}</Box>
-      <Typography>Follow your first {name}</Typography>
-      <Typography>
+      <Typography variant="h4" fontWeight={700} gutterBottom>
+        Follow your first {name}
+      </Typography>
+      <Typography variant="body1" gutterBottom>
         Follow {name}s you like by tapping the follow button.
       </Typography>
-      <ButtonBase>Find {name}s</ButtonBase>
+      <ButtonBase
+        sx={{
+          height: 50,
+          width: 170,
+          borderRadius: "40px",
+          backgroundColor: "#fff",
+          color: "#000",
+          fontSize: "1.6rem",
+        }}
+      >
+        Find {name}s
+      </ButtonBase>
     </Box>
   );
 }

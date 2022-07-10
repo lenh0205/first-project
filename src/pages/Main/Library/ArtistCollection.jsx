@@ -9,7 +9,7 @@ function ArtistCollection() {
       {artist ? (
         <div>Some Artist</div>
       ) : (
-        <NonFollow icon={<RecordVoiceOverIcon />} name="artist" />
+        <NonFollow icon={<RecordVoiceOverIcon sx={{ fontSize: 70}}/>} name="artist" />
       )}
     </React.Fragment>
   );
