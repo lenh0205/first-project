@@ -14,12 +14,17 @@ import LikeSong from '~/pages/Main/LikeSong';
 import Playlist from '~/pages/Main/Playlist';
 import Search from '~/pages/Main/Search';
 import ProtectedRoute from '~/components/ProtectedRoute.js';
+import { MainPageContextProvider } from '~/context/MainPageContext.js';
 
 function App() {
   return (
     <UserAuthContextProvider>
       <Routes>
-        <Route path="/" element={<Main />}>
+        <Route path="/" element={
+          <MainPageContextProvider>
+            <Main />
+          </MainPageContextProvider>
+        }>
           <Route index element={<Home />} />
           <Route path="search" element={<Search />} />
           <Route path="playlist">

@@ -1,4 +1,3 @@
-import axios from "axios";
 import axiosClient from "./axiosClient";
 
 const playlistApi = {
@@ -13,6 +12,10 @@ const playlistApi = {
     add(data) {
         const url = '/playlist';
         return axiosClient.post(url, data)
+    },
+    delete(id) {
+        const url = `/playlist/${id}`
+        return axiosClient.delete(url)
     },
     updateLikedPlaylist(id, liked) {
         const url = `/playlist/${id}`

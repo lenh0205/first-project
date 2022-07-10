@@ -8,24 +8,22 @@ import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { useMainPageContext } from "~/context/MainPageContext";
 import { useUserAuth } from "~/context/UserAuthContext";
 import { toggleDrawer } from "~/pages/Main/layoutSlice";
 import { LogoImage } from "../../../../assets/images";
 
-const currentUser = true;
-
 const AppBarCuz = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open" && prop !== "drawerWidth",
 })(({ theme, open, drawerWidth }) => ({
-  zIndex: theme.zIndex.drawer + 1,
+  zIndex: theme.zIndex.drawer + 2,
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  backgroundColor: theme.palette.background.appbar,
   backgroundImage: "none",
   position: "fixed",
   ...(open && {
@@ -45,25 +43,43 @@ const ButtonCuz = styled(Button)({
 });
 
 export default function AppBar({ children }) {
+  const dispatch = useDispatch();
   const { user } = useUserAuth();
-  
+  const appbarRef = useRef();
+
   const open = useSelector((state) => state.layout.open);
   const drawerWidth = useSelector((state) => state.layout.drawerWidth);
-  const dispatch = useDispatch();
+
+  const { leftSideRef } = useMainPageContext();
+  useEffect(() => {
+    if (leftSideRef) {
+      leftSideRef.current.onscroll = () => {
+        if (leftSideRef.current.scrollTop > 80) {
+          appbarRef.current.style.backgroundColor = 'rgb(32, 16, 96)';
+        } else {
+          appbarRef.current.style.backgroundColor = 'rgba(32, 16, 96, 0)';
+        }
+      };
+    }
+  }, [leftSideRef]);
 
   return (
-    <AppBarCuz
-      open={open}
-      drawerWidth={drawerWidth}
-      sx={{ backgroundColor: "transparent" }}
-    >
+    <AppBarCuz ref={appbarRef} open={open} drawerWidth={drawerWidth}>
       <Toolbar
         sx={{
           pr: "24px", // keep right padding when drawer closed
         }}
       >
         <Grid container>
-          <Grid item xs={1} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+          <Grid
+            item
+            xs={1}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <IconButton
               edge="start"
               aria-label="open drawer"
@@ -77,7 +93,7 @@ export default function AppBar({ children }) {
               <MenuIcon />
             </IconButton>
           </Grid>
-          <Grid item xs={2} >
+          <Grid item xs={2}>
             <Link to="/">
               <IconButton
                 sx={{
@@ -91,10 +107,26 @@ export default function AppBar({ children }) {
               </IconButton>
             </Link>
           </Grid>
-          <Grid item xs={5} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+          <Grid
+            item
+            xs={5}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             {children}
           </Grid>
-          <Grid item xs={3} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+          <Grid
+            item
+            xs={3}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             {user ? (
               <React.Fragment>
                 <Chip

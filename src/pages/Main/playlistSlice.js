@@ -31,6 +31,14 @@ export const createNewPlaylist = createAsyncThunk(
     }
 )
 
+export const deletePlaylist = createAsyncThunk(
+    'playlists/deletePlaylist',
+    async (id) => {
+        const response = await playlistApi.delete(id);
+        return id;
+    }
+)
+
 const playlistSlice = createSlice({
     name: 'playlists',
     initialState: {
@@ -53,24 +61,30 @@ const playlistSlice = createSlice({
             return { ...state, playlists: payload }
         },
         [fetchAsyncPlaylists.rejected]: (state, { error }) => {
-            console.log('rejected!', error.message)
+            console.log('rejected!', error)
         },
         [updateLikedPlaylists.fulfilled]: (state, { payload }) => {
             state.selectedPlaylist.liked = payload.liked
         },
         [updateLikedPlaylists.rejected]: (state, { error }) => {
-            console.log('rejected!', error.message)
+            console.log('rejected!', error)
         },
         [fetchSelectedPlaylist.fulfilled]: (state, { payload }) => {
             return { ...state, selectedPlaylist: payload }
         },
         [fetchSelectedPlaylist.rejected]: (state, { error }) => {
-            console.log('rejected!', error.message)
+            console.log('rejected!', error)
         },
         [createNewPlaylist.fulfilled]: (state, { payload }) => {
             state.playlists.push(payload)
         },
         [createNewPlaylist.rejected]: (state, { error }) => {
+            console.log('rejected!', error)
+        },
+        [deletePlaylist.fulfilled]: (state, { payload }) => {
+            state.playlists = state.playlists.filter(playlist => playlist.id !== payload)
+        },
+        [deletePlaylist.rejected]: (state, { error }) => {
             console.log('rejected!', error)
         }
     }

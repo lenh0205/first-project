@@ -123,7 +123,6 @@ function PlayBack() {
           currentIndex={currentIndex}
           playlistId={song.playlistId}
           volume={volume}
-          setVolume={setVolume}
         />
       </Grid>
 
