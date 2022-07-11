@@ -1,7 +1,7 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
-import ButtonBase from "@mui/material/ButtonBase";
+import WhiteButton from "~/pages/Main/components/Button/WhiteButton.jsx";
 
 function NonFollow({ icon, name }) {
   return (
@@ -22,18 +22,7 @@ function NonFollow({ icon, name }) {
       <Typography variant="body1" gutterBottom>
         Follow {name}s you like by tapping the follow button.
       </Typography>
-      <ButtonBase
-        sx={{
-          height: 50,
-          width: 170,
-          borderRadius: "40px",
-          backgroundColor: "#fff",
-          color: "#000",
-          fontSize: "1.6rem",
-        }}
-      >
-        Find {name}s
-      </ButtonBase>
+      <WhiteButton>Find {name}s</WhiteButton>
     </Box>
   );
 }

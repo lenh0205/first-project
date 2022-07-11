@@ -5,7 +5,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
-import PlayButton from "~/components/PlayButton";
+import PlayButton from "~/pages/Main/components/Button/PlayButton";
 
 function TopicPlaylists({ toppic, playlists }) {
   return (

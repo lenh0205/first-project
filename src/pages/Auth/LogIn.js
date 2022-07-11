@@ -15,7 +15,7 @@ import Typography from '@mui/material/Typography';
 import 'firebase/compat/auth';
 import { useFormik } from 'formik';
 import { useState } from 'react';
-import { Link, useNavigate, useOutletContext } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { useUserAuth } from '~/context/UserAuthContext';
 

@@ -3,7 +3,7 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import PlayButton from "~/components/PlayButton";
+import PlayButton from "~/pages/Main/components/Button/PlayButton";
 
 import React from "react";
 

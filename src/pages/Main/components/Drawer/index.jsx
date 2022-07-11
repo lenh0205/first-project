@@ -5,24 +5,26 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import HomeIcon from "@mui/icons-material/Home";
 import LibraryMusicIcon from "@mui/icons-material/LibraryMusic";
 import SearchIcon from "@mui/icons-material/Search";
-import {
-  Divider,
-  IconButton,
-  List,
-  ListItemButton,
-  ListItemIcon,
-  Switch,
-  Toolbar
-} from "@mui/material";
+import Divider from "@mui/material/Divider";
 import MuiDrawer from "@mui/material/Drawer";
+import IconButton from "@mui/material/IconButton";
+import List from "@mui/material/List";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import Switch from "@mui/material/Switch";
+import Toolbar from "@mui/material/Toolbar";
 import { styled } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { LogoImage } from "~/assets/images";
 import { useUserAuth } from "~/context/UserAuthContext";
-import { toggleDrawer } from "~/pages/Main/layoutSlice";
-import { createNewPlaylist, increasePlaylistNumberOrder } from "~/pages/Main/playlistSlice.js";
+import { switchMode, toggleDrawer } from "~/pages/Main/layoutSlice";
+import {
+  createNewPlaylist,
+  increasePlaylistNumberOrder,
+} from "~/pages/Main/playlistSlice.js";
+import PageNav from "./PageNav";
 
 const DrawerCuz = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open" && prop !== "drawerWidth",
@@ -41,7 +43,7 @@ const DrawerCuz = styled(MuiDrawer, {
     }),
     boxSizing: "border-box",
     ...(!open && {
-       overflowX: "hidden",
+      overflowX: "hidden",
       transition: theme.transitions.create("width", {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
@@ -54,27 +56,29 @@ const DrawerCuz = styled(MuiDrawer, {
   },
 }));
 
-const ListItemButtonCuz = styled(ListItemButton)({
-  paddingLeft: 24,
-});
+export default function Drawer() {
+  const { user } = useUserAuth();
 
-export default function Drawer({ mode, setMode }) {
-  const { user } = useUserAuth()
+  const mode = useSelector(state => state.layout.mode)
 
   const dispatch = useDispatch();
   const open = useSelector((state) => state.layout.open);
   const drawerWidth = useSelector((state) => state.layout.drawerWidth);
 
-  const newPlaylistNumberOrder = useSelector(state => state.playlists.newPlaylistNumberOrder)
+  const newPlaylistNumberOrder = useSelector(
+    (state) => state.playlists.newPlaylistNumberOrder
+  );
 
   const handleCreatedPlaylist = () => {
-    dispatch(createNewPlaylist({
-      name: `My Playlist #${newPlaylistNumberOrder}`,
-      sub: `By ${user.email}`,
-      img: 'https://lh3.googleusercontent.com/pw/AM-JKLX7We61NcUNoUR2edboKDjI7MW1r1ZsGnBFtipSJ1gp5W-Z4kEqOhmlFYSYw_Uzbqg0abN_o4EkgNQEDyeaEFbLItZAMQCAg4mEw9EEn7KqG9R4i7wboo-aSMpq8bkAODM0YL-HEbiD5QmhbI8FW9PH=w372-h616-no?authuser=0',
-      type: "created"
-    }))
-    dispatch(increasePlaylistNumberOrder(newPlaylistNumberOrder + 1))
+    dispatch(
+      createNewPlaylist({
+        name: `My Playlist #${newPlaylistNumberOrder}`,
+        sub: `By ${user.email}`,
+        img: "https://lh3.googleusercontent.com/pw/AM-JKLX7We61NcUNoUR2edboKDjI7MW1r1ZsGnBFtipSJ1gp5W-Z4kEqOhmlFYSYw_Uzbqg0abN_o4EkgNQEDyeaEFbLItZAMQCAg4mEw9EEn7KqG9R4i7wboo-aSMpq8bkAODM0YL-HEbiD5QmhbI8FW9PH=w372-h616-no?authuser=0",
+        type: "created",
+      })
+    );
+    dispatch(increasePlaylistNumberOrder(newPlaylistNumberOrder + 1));
   };
 
   return (
@@ -103,56 +107,49 @@ export default function Drawer({ mode, setMode }) {
       </Toolbar>
       {/* Main List */}
       <List component="nav">
-        <Link to="/">
-          <ListItemButtonCuz>
-            <ListItemIcon>
-              <HomeIcon />
-            </ListItemIcon>
-            <ListItemText primary="Home" />
-          </ListItemButtonCuz>
-        </Link>
-        <Link to="/search">
-          <ListItemButtonCuz>
-            <ListItemIcon>
-              <SearchIcon />
-            </ListItemIcon>
-            <ListItemText primary="Search" />
-          </ListItemButtonCuz>
-        </Link>
-        <Link to="/collection">
-          <ListItemButtonCuz>
-            <ListItemIcon>
-              <LibraryMusicIcon />
-            </ListItemIcon>
-            <ListItemText primary="Your Library" />
-          </ListItemButtonCuz>
-        </Link>
+        <PageNav to="/" primary="Home" icon={<HomeIcon />} />
+        <PageNav to="/search" primary="Search" icon={<SearchIcon />} />
+        <PageNav
+          to="/collection"
+          primary="Your Library"
+          icon={<LibraryMusicIcon />}
+        />
 
         <Divider sx={{ my: 1, borderColor: "transparent" }} />
 
-        {/* Sub List */}
-        <ListItemButtonCuz onClick={handleCreatedPlaylist}>
+        {/* Create Playlist Button */}
+        <ListItemButton
+          onClick={handleCreatedPlaylist}
+          sx={{
+            paddingLeft: 3,
+          }}
+        >
           <ListItemIcon>
             <AddBoxIcon />
           </ListItemIcon>
           <ListItemText primary="Create Playlist" />
-        </ListItemButtonCuz>
-        <Link to="/collection/tracks">
-          <ListItemButtonCuz>
-            <ListItemIcon>
-              <FavoriteBorderIcon />
-            </ListItemIcon>
-            <ListItemText primary="Liked Songs" />
-          </ListItemButtonCuz>
-        </Link>
+        </ListItemButton>
+
+        <PageNav
+          to="/collection/tracks"
+          primary="Liked Songs"
+          icon={<FavoriteBorderIcon />}
+        />
+
         <Divider sx={{ mx: 3 }} />
 
-        <ListItemButton component="a" href="#simple-list">
+        <ListItemButton
+          component="a"
+          href="#simple-list"
+          sx={{
+            paddingLeft: 3,
+          }}
+        >
           <ListItemIcon>
             <DarkModeIcon />
           </ListItemIcon>
           <Switch
-            onChange={(e) => setMode(mode === "light" ? "dark" : "light")}
+            onChange={(e) => dispatch(switchMode(mode))}
           />
         </ListItemButton>
       </List>

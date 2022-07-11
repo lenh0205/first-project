@@ -1,5 +1,10 @@
+import { createTheme, ThemeProvider } from "@mui/material";
 import 'firebase/compat/auth';
+import { useSelector } from 'react-redux';
 import { Navigate, Route, Routes } from 'react-router-dom';
+import PageNotFound from '~/components/PageNotFound/index.jsx';
+import ProtectedRoute from '~/components/ProtectedRoute/index.jsx';
+import { MainPageContextProvider } from '~/context/MainPageContext.js';
 import { UserAuthContextProvider } from '~/context/UserAuthContext.js';
 import LogIn from '~/pages/Auth/LogIn';
 import SignUp from '~/pages/Auth/SignUp';
@@ -13,17 +18,47 @@ import PodcastCollection from '~/pages/Main/Library/PodcastCollection';
 import LikeSong from '~/pages/Main/LikeSong';
 import Playlist from '~/pages/Main/Playlist';
 import Search from '~/pages/Main/Search';
-import ProtectedRoute from '~/components/ProtectedRoute.js';
-import { MainPageContextProvider } from '~/context/MainPageContext.js';
 
 function App() {
+  const mode = useSelector(state => state.layout.mode)
+  
+  const mainTheme = createTheme({
+    typography: {
+      htmlFontSize: 10,
+    },
+    palette: {
+      mode: mode,
+      ...(mode === "light"
+        ? {
+          background: {
+            default: "#fff",
+            paper: "#f9f9f9",
+            card: "#fff",
+            appbar: "#fffffffa",
+          },
+        }
+        : {
+          background: {
+            default: "#000",
+            paper: "#121212",
+            card: "#181818",
+            appbar: "rgb(32, 16, 96)",
+          },
+        }),
+      secondary: {
+        main: "#1ed760",
+      },
+    },
+  });
   return (
     <UserAuthContextProvider>
       <Routes>
         <Route path="/" element={
-          <MainPageContextProvider>
-            <Main />
-          </MainPageContextProvider>
+          <ThemeProvider theme={mainTheme}>
+            <MainPageContextProvider>
+              <Main />
+            </MainPageContextProvider>
+          </ThemeProvider>
         }>
           <Route index element={<Home />} />
           <Route path="search" element={<Search />} />
@@ -50,7 +85,7 @@ function App() {
         </Route>
         <Route path="signup" element={<SignUp />} />
         <Route path="login" element={<LogIn />} />
-        <Route path="*" element={<div>Page Not Found</div>} />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </UserAuthContextProvider>
   );

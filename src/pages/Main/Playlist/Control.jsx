@@ -1,6 +1,6 @@
 import React from "react";
 import Box from "@mui/material/Box";
-import PlayButton from "~/components/PlayButton";
+import PlayButton from "~/pages/Main/components/Button/PlayButton";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import IconButton from "@mui/material/IconButton";
