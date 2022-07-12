@@ -53,9 +53,9 @@ export default function AppBar({ children }) {
     if (leftSideRef) {
       leftSideRef.current.onscroll = () => {
         if (leftSideRef.current.scrollTop > 80) {
-          appbarRef.current.style.backgroundColor = 'rgb(32, 16, 96)';
+          appbarRef.current.style.backgroundColor = "rgb(32, 16, 96)";
         } else {
-          appbarRef.current.style.backgroundColor = 'rgba(32, 16, 96, 0)';
+          appbarRef.current.style.backgroundColor = "rgba(32, 16, 96, 0)";
         }
       };
     }
@@ -65,7 +65,7 @@ export default function AppBar({ children }) {
     <AppBarCuz ref={appbarRef} open={open} drawerWidth={drawerWidth}>
       <Toolbar
         sx={{
-          pr: "24px", // keep right padding when drawer closed
+          pr: "24px", 
         }}
       >
         <Grid container>
@@ -126,7 +126,7 @@ export default function AppBar({ children }) {
             }}
           >
             {user ? (
-                <UserSetting/>
+              <UserSetting />
             ) : (
               <React.Fragment>
                 <Link to="/signup">

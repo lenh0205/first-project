@@ -55,15 +55,7 @@ function PlayBack() {
   };
 
   return (
-    <Grid
-      container
-      position="fixed"
-      bottom={0}
-      height={90}
-      paddingX={2}
-      zIndex={(theme) => theme.zIndex.drawer + 3}
-      backgroundColor="warning.main"
-    >
+    <Grid container height={90} paddingX={2} backgroundColor="warning.main" >
       <Grid item xs={4} sx={{ display: "flex", alignItems: "center" }}>
         <Box>
           <CardMedia

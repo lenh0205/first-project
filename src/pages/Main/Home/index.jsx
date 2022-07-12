@@ -1,11 +1,13 @@
 import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AppBar from "~/pages/Main/components/AppBar";
 import { fetchAsyncPlaylists } from "~/pages/Main/playlistSlice.js";
+import IPadSetting from "./IPadSetting";
 import TopicPlaylists from "./TopicPlaylists";
 import TopicTitle from "./TopicTitle";
 
@@ -14,6 +16,9 @@ export default function Home() {
   const playlists = useSelector((state) => state.playlists.playlists);
 
   const dispatch = useDispatch();
+
+  const theme = useTheme();
+  const iPadMatch = useMediaQuery(theme.breakpoints.down("md"));
 
   useEffect(() => {
     const fetchToppics = async () => {
@@ -29,8 +34,17 @@ export default function Home() {
   }, [dispatch]);
 
   return (
-    <Container sx={{ pt: 10, pb: 2 }} maxWidth="lg">
-      <AppBar />
+    <Box
+      sx={{
+        pt: { xs: 4, md: 10 },
+        pb: 2,
+        px: 4
+      }}
+      maxWidth="lg"
+    >
+      {iPadMatch || <AppBar />}
+
+      {iPadMatch && <IPadSetting />}
       {/* Content */}
       <Box>
         <Grid container direction="column" spacing={5}>
@@ -42,6 +56,6 @@ export default function Home() {
           ))}
         </Grid>
       </Box>
-    </Container>
+    </Box>
   );
 }

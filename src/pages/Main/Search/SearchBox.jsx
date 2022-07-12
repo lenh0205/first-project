@@ -7,15 +7,25 @@ function SearchBox() {
   return (
     <Paper
       component="form"
-      sx={{ p: "2px 4px", display: "flex", alignItems: "center", width: 400 }}
+      sx={{
+        p: "2px 4px",
+        display: "flex",
+        alignItems: "center",
+        width: {xs: 1, md: 400},
+        backgroundColor: "#fff",
+        borderRadius: {xs: 1, md:8}
+      }}
     >
-      <IconButton type="submit" sx={{ p: "10px" }} aria-label="search">
+      <IconButton
+        type="submit"
+        sx={{ p: "10px", color: "#000" }}
+        aria-label="search"
+      >
         <SearchIcon />
       </IconButton>
       <InputBase
-        sx={{ ml: 1, flex: 1 }}
+        sx={{ ml: 1, flex: 1, color: "#000" }}
         placeholder="Artists, songs, or podcasts"
-        inputProps={{ "aria-label": "search google maps" }}
       />
     </Paper>
   );

@@ -18,10 +18,11 @@ import PodcastCollection from '~/pages/Main/Library/PodcastCollection';
 import LikeSong from '~/pages/Main/LikeSong';
 import Playlist from '~/pages/Main/Playlist';
 import Search from '~/pages/Main/Search';
+import GetApp from "~/pages/Main/GetApp";
 
 function App() {
   const mode = useSelector(state => state.layout.mode)
-  
+
   const mainTheme = createTheme({
     typography: {
       htmlFontSize: 10,
@@ -82,6 +83,7 @@ function App() {
               <LikeSong />
             </ProtectedRoute>
           } />
+          <Route path="upsell" element={<GetApp />} />
         </Route>
         <Route path="signup" element={<SignUp />} />
         <Route path="login" element={<LogIn />} />
