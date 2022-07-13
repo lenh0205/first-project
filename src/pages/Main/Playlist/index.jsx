@@ -10,9 +10,13 @@ import Banner from "./Banner";
 import Control from "./Control";
 import SongList from "./SongList";
 import Title from "./Title";
-
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 function Playlist({ playlistInfo, songs }) {
+  const theme = useTheme();
+  const iPadMatch = useMediaQuery(theme.breakpoints.down("md"));
+
   const dispatch = useDispatch();
   const selectedPlaylist = useSelector(
     (state) => state.playlists.selectedPlaylist
@@ -34,9 +38,8 @@ function Playlist({ playlistInfo, songs }) {
 
   return (
     <React.Fragment>
-      <AppBar />
+      {iPadMatch || <AppBar />}
       <Banner playlistInfo={playlistInfo} />
-
       <Stack
         sx={{
           backgroundImage:
@@ -44,8 +47,8 @@ function Playlist({ playlistInfo, songs }) {
         }}
       >
         <Control liked={playlistInfo.liked} id={playlistInfo.id} />
+        {iPadMatch || <Title />}
 
-        <Title />
         <Divider />
 
         <SongList songs={songs} />

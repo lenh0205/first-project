@@ -16,6 +16,7 @@ import styles from "./Playlist.module.scss";
 import classNames from "classnames/bind";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 const cx = classNames.bind(styles);
 
@@ -53,10 +54,10 @@ function SongList({ songs }) {
         >
           <Grid
             item
-            xs={0.6}
+            md={0.6}
             onClick={() => handleOpenPlayBack(song, index)}
             sx={{
-              display: "flex",
+              display: { xs: "none", md: "flex" },
               justifyContent: "center",
               alignItems: "center",
             }}
@@ -86,8 +87,23 @@ function SongList({ songs }) {
               )}
             </Typography>
           </Grid>
-          <Grid item xs={4.6} sx={{ display: "flex", alignItems: "center" }}>
-            <Avatar variant="square" alt="song image" src={song.img} />
+          <Grid
+            item
+            xs={8.2}
+            md={4.6}
+            sx={{ display: "flex", alignItems: "center" }}
+          >
+            <Avatar
+              variant="square"
+              alt="song image"
+              src={song.img}
+              sx={{
+                ml: {
+                  xs: 2,
+                  md: 0,
+                },
+              }}
+            />
             <Stack paddingLeft={2}>
               <Typography
                 variant="subtitle1"
@@ -101,10 +117,28 @@ function SongList({ songs }) {
               <Typography variant="body2">{song.singer}</Typography>
             </Stack>
           </Grid>
-          <Grid item xs={3}>
+          <Grid
+            item
+            md={3}
+            sx={{
+              display: {
+                xs: "none",
+                md: "block",
+              },
+            }}
+          >
             <Typography variant="body2">{song.album}</Typography>
           </Grid>
-          <Grid item xs={2.2}>
+          <Grid
+            item
+            xs={2.2}
+            sx={{
+              display: {
+                xs: "none",
+                md: "block",
+              },
+            }}
+          >
             <Typography variant="body2">4 day ago</Typography>
           </Grid>
           <Grid
@@ -122,7 +156,31 @@ function SongList({ songs }) {
                 <FavoriteIcon />
               </IconButton>
             </Box>
-            <Box>3:18</Box>
+            <Box
+              sx={{
+                display: {
+                  xs: "none",
+                  md: "block",
+                },
+              }}
+            >
+              3:18
+            </Box>
+          </Grid>
+          <Grid
+            item
+            xs={2.2}
+            sx={{
+              display: {
+                xs: "flex",
+                md: "none",
+              },
+              justifyContent: 'flex-end'
+            }}
+          >
+            <IconButton>
+              <MoreVertIcon />
+            </IconButton>
           </Grid>
         </Grid>
       ))}
