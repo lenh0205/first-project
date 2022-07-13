@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import { useMainPageContext } from "~/context/MainPageContext";
 import { useUserAuth } from "~/context/UserAuthContext";
 import { toggleDrawer } from "~/pages/Main/layoutSlice";
-import { LogoImage } from "../../../../assets/images";
+import { LogoImage } from "~/assets/images";
 import UserSetting from "./UserSetting";
 
 const AppBarCuz = styled(MuiAppBar, {
@@ -25,6 +25,7 @@ const AppBarCuz = styled(MuiAppBar, {
   backgroundImage: "none",
   position: "fixed",
   ...(open && {
+    boxShadow: 'unset',
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(["width", "margin"], {
@@ -84,7 +85,7 @@ export default function AppBar({ children }) {
               onClick={() => dispatch(toggleDrawer())}
               sx={{
                 marginRight: "36px",
-                color: "#030303",
+                color: theme => theme.palette.background.text,
                 ...(open && { display: "none" }),
               }}
             >

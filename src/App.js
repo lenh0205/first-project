@@ -36,6 +36,7 @@ function App() {
             paper: "#f9f9f9",
             card: "#fff",
             appbar: "#fffffffa",
+            text: "#000"
           },
         }
         : {
@@ -44,6 +45,7 @@ function App() {
             paper: "#121212",
             card: "#181818",
             appbar: "rgb(32, 16, 96)",
+            text: "#fff"
           },
         }),
       secondary: {

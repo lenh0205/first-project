@@ -102,7 +102,7 @@ export default function Drawer() {
           </Link>
         )}
         <IconButton onClick={() => dispatch(toggleDrawer())}>
-          <ChevronLeftIcon />
+          {open && <ChevronLeftIcon />}
         </IconButton>
       </Toolbar>
       {/* Main List */}
