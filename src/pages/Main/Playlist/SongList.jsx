@@ -10,8 +10,14 @@ import {
   getSelectedSong,
   openPlayBack,
   toggleIsPlaying,
-  updateLikedSongs
+  updateLikedSongs,
 } from "~/pages/Main/SongSlice";
+import styles from "./Playlist.module.scss";
+import classNames from "classnames/bind";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import PauseIcon from "@mui/icons-material/Pause";
+
+const cx = classNames.bind(styles);
 
 function SongList({ songs }) {
   const dispatch = useDispatch();
@@ -35,14 +41,63 @@ function SongList({ songs }) {
   return (
     <Box sx={{ paddingX: 4, paddingTop: 2, paddingBottom: 4 }}>
       {songs.map((song, index) => (
-        <Grid key={song.id} container spacing={2} alignItems="center">
-          <Grid item xs={0.4} onClick={() => handleOpenPlayBack(song, index)}>
-            {index + 1}
+        <Grid
+          key={song.id}
+          container
+          alignItems="center"
+          className={cx("song-card")}
+          sx={{
+            height: 57,
+            borderRadius: "4px",
+          }}
+        >
+          <Grid
+            item
+            xs={0.6}
+            onClick={() => handleOpenPlayBack(song, index)}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Typography
+              variant="subtitle1"
+              sx={{
+                cursor: "pointer",
+              }}
+              className={cx("song-index")}
+            >
+              {isPlaying && index === currentIndex ? (
+                <img
+                  alt="song"
+                  src="https://open.spotifycdn.com/cdn/images/equaliser-animated-green.f93a2ef4.gif"
+                  style={{ width: "14px" }}
+                ></img>
+              ) : (
+                index + 1
+              )}
+            </Typography>
+            <Typography>
+              {isPlaying && index === currentIndex ? (
+                <PauseIcon className={cx("song-control")} />
+              ) : (
+                <PlayArrowIcon className={cx("song-control")} />
+              )}
+            </Typography>
           </Grid>
-          <Grid item xs={4.8} sx={{ display: "flex", alignItems: "center" }}>
+          <Grid item xs={4.6} sx={{ display: "flex", alignItems: "center" }}>
             <Avatar variant="square" alt="song image" src={song.img} />
             <Stack paddingLeft={2}>
-              <Typography variant="subtitle1">{song.name}</Typography>
+              <Typography
+                variant="subtitle1"
+                sx={{
+                  color:
+                    isPlaying && index === currentIndex ? "#1ed760" : "unset",
+                }}
+              >
+                {song.name}
+              </Typography>
               <Typography variant="body2">{song.singer}</Typography>
             </Stack>
           </Grid>

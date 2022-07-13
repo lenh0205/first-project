@@ -6,6 +6,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 import PlayButton from "~/pages/Main/components/Button/PlayButton";
+import PlaylistCard from "../components/PlaylistCard";
 
 function TopicPlaylists({ toppic, playlists }) {
   return (
@@ -15,63 +16,7 @@ function TopicPlaylists({ toppic, playlists }) {
         .map((playlist) => (
           <Grid item key={playlist.id} xs={12} sm={6} md={4} lg={2.4}>
             <Link to={`playlist/${playlist.id}`}>
-              <Card
-                sx={{
-                  height: 267,
-                  display: "flex",
-                  flexDirection: "column",
-                  p: 2,
-                  position: "relative",
-                  backgroundColor: "background.card",
-                }}
-              >
-                <CardMedia
-                  component="img"
-                  sx={{
-                    height: 158,
-                    mb: 2,
-                  }}
-                  image={playlist.img}
-                  alt="random"
-                />
-                <CardContent sx={{ p: 0 }}>
-                  <Typography
-                    sx={{
-                      fontWeight: 700,
-                      fontSize: "1.6rem",
-                      lineHeight: "2.4rem",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                    }}
-                    variant="h5"
-                    component="h2"
-                  >
-                    {playlist.name}
-                  </Typography>
-                  <Typography
-                    sx={{
-                      fontWeight: 400,
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                    }}
-                    variant="subtitle2"
-                    component="h3"
-                  >
-                    {playlist.sub}
-                  </Typography>
-                </CardContent>
-                <CardActions
-                  sx={{
-                    position: "absolute",
-                    top: 118,
-                    right: 24,
-                  }}
-                >
-                  <PlayButton />
-                </CardActions>
-              </Card>
+              <PlaylistCard playlist={playlist} />
             </Link>
           </Grid>
         ))}

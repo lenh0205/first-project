@@ -12,11 +12,18 @@ function Banner({ playlistInfo }) {
       spacing={3}
       height="58vh"
       alignItems="flex-end"
-      sx={{ paddingX: 4, paddingBottom: 3 }}
-      className={cx("title")}
+      sx={{
+        paddingX: 4,
+        paddingBottom: 3,
+        backgroundImage: "linear-gradient(to bottom left, #513a9f, #271c4e)",
+      }}
     >
       <Grid item xs={3} alignItems="flex-end">
-        <img src={playlistInfo.img} alt="liked song" className={cx("like-img")} />
+        <img
+          src={playlistInfo.img}
+          alt="liked song"
+          className={cx("like-img")}
+        />
       </Grid>
       <Grid container item xs direction="column">
         <Grid item>

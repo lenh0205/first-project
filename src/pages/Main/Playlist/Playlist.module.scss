@@ -1,12 +1,20 @@
-.title {
-  background-image: linear-gradient(to bottom left, #513a9f, #271c4e);
-}
 .like-img {
   width: 100%;
   object-fit: cover;
   object-position: center;
 }
 
-.content {
-  background-image: linear-gradient(to bottom, #211840 0%, #121212 35%);
+.song-card {
+  .song-control {
+    display: none;
+  }
+  &:hover {
+    background-color: #ffffff1a;
+    .song-index {
+      display: none;
+    }
+    .song-control {
+      display: block;
+    }
+  }
 }
