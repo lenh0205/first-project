@@ -1,3 +1,4 @@
+import { OutlinedInput } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -11,44 +12,27 @@ import FormHelperText from '@mui/material/FormHelperText';
 import FormLabel from '@mui/material/FormLabel';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
+import InputLabel from '@mui/material/InputLabel';
 import LinkMui from '@mui/material/Link';
+import MenuItem from '@mui/material/MenuItem';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
+import Select from '@mui/material/Select';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import 'firebase/compat/auth';
+import { useFormik } from 'formik';
 import { useState } from 'react';
-import { Link, useLocation, useNavigate, useOutletContext } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import * as Yup from 'yup';
 import { LogoImage } from '~/assets/images';
 import { useUserAuth } from '~/context/UserAuthContext';
-import * as Yup from 'yup';
-import { useFormik } from 'formik';
 
 const theme = createTheme({
     typography: {
         htmlFontSize: 10
     },
 });
-
-const LongButton = styled(Button)({
-    width: "70%",
-    minWidth: "312px",
-    height: 45,
-    borderRadius: 22,
-    textTransform: "none",
-    fontSize: "1.6rem",
-
-})
-
-// const uiConfig = {
-//     signInFlow: 'redirect',
-//     signInsuccessUrl: '/',
-//     signInOptions: [
-//         firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-//         firebase.auth.FacebookAuthProvider.PROVIDER_ID
-//     ],
-// };
 
 const months = [
     'January', 'February', 'March', 'April',
@@ -79,7 +63,7 @@ export default function SignUp() {
             day: '',
             month: '',
             year: '',
-            gender: ''
+            gender: '',
         },
         validationSchema: Yup.object({
             email: Yup
@@ -129,8 +113,6 @@ export default function SignUp() {
                     <Typography component="div" fontSize="3.2rem" fontWeight={700} mt={5} textAlign="center">
                         Sign up for free to start listening
                     </Typography>
-
-                    {/* <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} /> */}
 
                     <Divider sx={{ width: 0.9, mt: 3 }}>or</Divider>
                     <Box component="form" noValidate onSubmit={formik.handleSubmit} sx={{ mt: 3 }}>
@@ -212,27 +194,32 @@ export default function SignUp() {
                                 />
                             </Grid>
                             <Grid item xs={5}>
-                                <TextField
-                                    fullWidth
-                                    select
-                                    label="Month"
-                                    name="month"
-                                    id="month"
-                                    SelectProps={{
-                                        native: true,
-                                    }}
-                                    value={formik.values.month}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    error={formik.touched.month && Boolean(formik.errors.month)}
-                                    helperText={formik.touched.month && formik.errors.month}
-                                >
-                                    {months.map((month, index) => (
-                                        <option key={index} value={month}>
-                                            {month}
-                                        </option>
-                                    ))}
-                                </TextField>
+                                <FormControl fullWidth error={formik.touched.month && Boolean(formik.errors.month)}>
+                                    <InputLabel id="month">Month</InputLabel>
+                                    <Select
+                                        labelId="month"
+                                        id="month"
+                                        name="month"
+                                        label="Month"
+                                        MenuProps={{
+                                            PaperProps: {
+                                                style: {
+                                                    maxHeight: 190,
+                                                },
+                                            }
+                                        }}
+                                        input={<OutlinedInput label="Month" />}
+                                        value={formik.values.month}
+                                        onChange={formik.handleChange}
+                                    >
+                                        {months.map((month, index) => (
+                                            <MenuItem key={index} value={month}>
+                                                {month}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                    <FormHelperText>{formik.touched.month && formik.errors.month}</FormHelperText>
+                                </FormControl>
                             </Grid>
                             <Grid item xs={4}>
                                 <TextField
@@ -249,7 +236,7 @@ export default function SignUp() {
                                 />
                             </Grid>
                             <Grid item xs={12}>
-                                <FormControl error={Boolean(formik.errors.gender)}>
+                                <FormControl error={formik.touched.gender && Boolean(formik.errors.gender)}>
                                     <FormLabel id="gender">What's your gender?</FormLabel>
                                     <RadioGroup
                                         row
@@ -262,7 +249,7 @@ export default function SignUp() {
                                         <FormControlLabel value="male" control={<Radio />} label="Male" />
                                         <FormControlLabel value="non" control={<Radio />} label="Non-binary" />
                                     </RadioGroup>
-                                    <FormHelperText>{formik.errors.gender}</FormHelperText>
+                                    <FormHelperText>{formik.touched.gender && formik.errors.gender}</FormHelperText>
                                 </FormControl>
                             </Grid>
                             <Grid item xs={12}>

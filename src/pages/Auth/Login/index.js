@@ -12,13 +12,16 @@ import LinkMui from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import 'firebase/compat/auth';
 import { useFormik } from 'formik';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { useUserAuth } from '~/context/UserAuthContext';
+import GoogleButton from "react-google-button";
+import classNames from "classnames/bind";
+import styles from "./Login.module.scss"
 
+const cx = classNames.bind(styles);
 
 function Copyright(props) {
     return (
@@ -39,19 +42,9 @@ const theme = createTheme({
     },
 });
 
-// const uiConfig = {
-//     signInFlow: 'redirect',
-//     signInsuccessUrl: '/',
-//     signInOptions: [
-//         firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-//         firebase.auth.FacebookAuthProvider.PROVIDER_ID
-//     ],
-// };
-
-
 export default function LogIn() {
     const [error, setError] = useState("");
-    const { logIn } = useUserAuth();
+    const { logIn, googleSignIn } = useUserAuth();
     const navigate = useNavigate();
 
     const handleSubmit = async (value) => {
@@ -64,6 +57,16 @@ export default function LogIn() {
             setError(err.message);
         }
     }
+
+    const handleGoogleSignIn = async (e) => {
+        e.preventDefault();
+        try {
+            await googleSignIn();
+            navigate("/");
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
 
     const formik = useFormik({
         initialValues: {
@@ -104,11 +107,16 @@ export default function LogIn() {
                     <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                         <LockOutlinedIcon />
                     </Avatar>
-                    <Typography component="h1" variant="h5">
+                    <Typography component="h1" variant="h5"
+                        sx={{
+                            pb: 3
+                        }}
+                    >
                         Log in
                     </Typography>
 
-                    {/* <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} /> */}
+                    <GoogleButton className={cx('google-btn')} type="dark" onClick={handleGoogleSignIn} />
+
                     <Box component="form" noValidate onSubmit={formik.handleSubmit} sx={{ mt: 1 }}>
                         <TextField
                             margin="normal"

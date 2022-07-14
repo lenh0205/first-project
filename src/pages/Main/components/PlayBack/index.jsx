@@ -55,13 +55,18 @@ function PlayBack() {
   };
 
   return (
-    <Grid container height={90} paddingX={2} backgroundColor="warning.main" >
+    <Grid container height={90} paddingX={2} sx={{
+      backgroundColor: theme => theme.palette.background.card
+    }}>
       <Grid item xs={4} sx={{ display: "flex", alignItems: "center" }}>
         <Box>
           <CardMedia
             component="img"
             image={song.img}
             alt="Live from space album cover"
+            sx={{
+              pr: 2
+            }}
           />
         </Box>
         <Box>

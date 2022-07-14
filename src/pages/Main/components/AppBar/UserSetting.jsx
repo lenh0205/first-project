@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Chip from "@mui/material/Chip";
 import Avatar from "@mui/material/Avatar";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -7,7 +7,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { useUserAuth } from "~/context/UserAuthContext";
 
 function UserSetting() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
   const { logOut } = useUserAuth();

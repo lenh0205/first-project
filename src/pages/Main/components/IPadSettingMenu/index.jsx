@@ -1,15 +1,24 @@
-import React from "react";
+import CloseIcon from "@mui/icons-material/Close";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
-import CloseIcon from "@mui/icons-material/Close";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { Typography } from "@mui/material";
+import { useUserAuth } from "~/context/UserAuthContext";
 
 function SettingMenu({ setOpenSetting }) {
+  const { logOut } = useUserAuth();
+
+  const handleLogOut = async () => {
+    try {
+      await logOut();
+    } catch (error) {
+      console.log(error.message);
+    }
+    setOpenSetting(false)
+  };
+
   return (
     <Box
       sx={{
@@ -37,7 +46,9 @@ function SettingMenu({ setOpenSetting }) {
       <List sx={{
         pt: 6
       }}>
-        <ListItem disablePadding>
+        <ListItem disablePadding
+          onClick={() => handleLogOut()}
+        >
           <ListItemButton>
             <ListItemText primary="Log Out"
                 sx={{
@@ -46,7 +57,9 @@ function SettingMenu({ setOpenSetting }) {
             />
           </ListItemButton>
         </ListItem>
-        <ListItem disablePadding>
+        <ListItem disablePadding
+          onClick={() => handleLogOut()}
+        >
           <ListItemButton>
             <ListItemText primary="Log Out" />
           </ListItemButton>

@@ -11,16 +11,22 @@ function Banner({ playlistInfo }) {
     <Box
       sx={{
         backgroundImage: "linear-gradient(to bottom left, #513a9f, #271c4e)",
-        display: 'flex',
-        pb: 3,
-        pl: 4,
-        pt: 10
+        display: "flex",
+        pb: { xs: 2, md: 3 },
+        pt: { xs: 2, md: 10 },
+        pl: { xs: 0, md: 4 },
       }}
     >
       <Grid
         container
+        sx={{
+          justifyContent: {
+            xs: "center",
+            md: "flex-start",
+          },
+        }}
       >
-        <Grid item xs={12} md={2.6}>
+        <Grid item md={2.6}>
           <Box
             sx={{
               display: "flex",
@@ -48,9 +54,7 @@ function Banner({ playlistInfo }) {
             justifyContent: "flex-end",
           }}
         >
-          <Box
-            sx={{ pl: 3 }}
-          >
+          <Box sx={{ pl: 3 }}>
             <Typography variant="subtitle2">PLAYLIST</Typography>
             <Typography variant="h1" sx={{ fontWeight: 700 }}>
               {playlistInfo.name}

@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import IconButton from '@mui/material/IconButton';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import SettingMenu from '~/pages/Main/components/SettingMenu';
+import SettingMenu from '~/pages/Main/components/IPadSettingMenu';
 
 function IPadSetting() {
     const [openSetting, setOpenSetting] = useState(false)

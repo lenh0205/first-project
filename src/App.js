@@ -6,7 +6,7 @@ import PageNotFound from '~/components/PageNotFound/index.jsx';
 import ProtectedRoute from '~/components/ProtectedRoute/index.jsx';
 import { MainPageContextProvider } from '~/context/MainPageContext.js';
 import { UserAuthContextProvider } from '~/context/UserAuthContext.js';
-import LogIn from '~/pages/Auth/LogIn';
+import LogIn from '~/pages/Auth/Login';
 import SignUp from '~/pages/Auth/SignUp';
 import Main from '~/pages/Main';
 import Home from '~/pages/Main/Home';

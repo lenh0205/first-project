@@ -43,8 +43,8 @@ export default function Home() {
       maxWidth="lg"
     >
       {iPadMatch || <AppBar />}
-
       {iPadMatch && <IPadSetting />}
+      
       {/* Content */}
       <Box>
         <Grid container direction="column" spacing={5}>
