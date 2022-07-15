@@ -1,5 +1,4 @@
 import { createTheme, ThemeProvider } from "@mui/material";
-import 'firebase/compat/auth';
 import { useSelector } from 'react-redux';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import PageNotFound from '~/components/PageNotFound/index.jsx';

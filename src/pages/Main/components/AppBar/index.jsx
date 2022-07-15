@@ -52,8 +52,8 @@ export default function AppBar({ children }) {
   const { leftSideRef } = useMainPageContext();
 
   useEffect(() => {
-    const leftSideElement = leftSideRef.current
-    
+    const leftSideElement = leftSideRef.current;
+
     if (leftSideElement && appbarRef.current) {
       const handelScroll = () => {
         if (leftSideElement.scrollTop > 80) {
@@ -61,28 +61,28 @@ export default function AppBar({ children }) {
         } else {
           appbarRef.current.style.backgroundColor = "rgba(32, 16, 96, 0)";
         }
-      }
+      };
       leftSideElement.addEventListener("scroll", handelScroll);
 
       return () => {
-        leftSideElement.removeEventListener("scroll", handelScroll)
-      }
+        leftSideElement.removeEventListener("scroll", handelScroll);
+      };
     }
   }, [leftSideRef]);
 
   return (
     <AppBarCuz ref={appbarRef} open={open} drawerWidth={drawerWidth}>
       <Toolbar
-        sx={{
-          pr: "24px",
-        }}
+        // sx={{
+        //   pr: "24px",
+        // }}
       >
         <Grid container>
           <Grid
             item
             xs={1}
             sx={{
-              display: "flex",
+              display: open ? "none" : "flex",
               justifyContent: "center",
               alignItems: "center",
             }}
@@ -94,18 +94,20 @@ export default function AppBar({ children }) {
               sx={{
                 marginRight: "36px",
                 color: (theme) => theme.palette.background.text,
-                ...(open && { display: "none" }),
               }}
             >
               <MenuIcon />
             </IconButton>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={2}
+            sx={{
+              ...(open && { display: "none" }),
+            }}
+          >
             <Link to="/">
               <IconButton
                 sx={{
                   color: "#1ed760",
-                  ...(open && { display: "none" }),
                   flexGrow: 1,
                 }}
                 disableRipple
@@ -116,10 +118,10 @@ export default function AppBar({ children }) {
           </Grid>
           <Grid
             item
-            xs={5}
+            xs={open ? 8 : 5}
             sx={{
               display: "flex",
-              justifyContent: "center",
+              justifyContent: "flex-start",
               alignItems: "center",
             }}
           >
