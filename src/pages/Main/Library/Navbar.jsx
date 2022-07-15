@@ -1,30 +1,36 @@
-import React from "react";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const NavBox = styled(Box)({
-  backgroundColor: "#000",
+  backgroundColor: "transparent",
   color: "#fff",
   borderRadius: "4px",
-  padding: "8px 16px",
+  minWidth: "100px",
+  height: "40px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  ".active &": {
+    backgroundColor: "#333333",
+  },
 });
 
 function Navbar() {
   return (
     <Box width={1} display="flex">
-      <Link to="playlists">
+      <NavLink to="playlists">
         <NavBox>Playlists</NavBox>
-      </Link>
-      <Link to="podcasts">
+      </NavLink>
+      <NavLink to="podcasts">
         <NavBox>Podcasts</NavBox>
-      </Link>
-      <Link to="artists">
+      </NavLink>
+      <NavLink to="artists">
         <NavBox>Artists</NavBox>
-      </Link>
-      <Link to="albums">
+      </NavLink>
+      <NavLink to="albums">
         <NavBox>Albums</NavBox>
-      </Link>
+      </NavLink>
     </Box>
   );
 }

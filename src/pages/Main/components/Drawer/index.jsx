@@ -78,7 +78,7 @@ export default function Drawer() {
       createNewPlaylist({
         name: `My Playlist #${newPlaylistNumberOrder}`,
         sub: `By ${user.email}`,
-        img: "https://lh3.googleusercontent.com/pw/AM-JKLX7We61NcUNoUR2edboKDjI7MW1r1ZsGnBFtipSJ1gp5W-Z4kEqOhmlFYSYw_Uzbqg0abN_o4EkgNQEDyeaEFbLItZAMQCAg4mEw9EEn7KqG9R4i7wboo-aSMpq8bkAODM0YL-HEbiD5QmhbI8FW9PH=w372-h616-no?authuser=0",
+        img: "https://i.pinimg.com/564x/f2/80/cc/f280cc10b54966131733b775b1e69131.jpg",
         type: "created",
       })
     );

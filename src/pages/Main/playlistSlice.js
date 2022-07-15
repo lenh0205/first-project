@@ -1,3 +1,4 @@
+import { async } from "@firebase/util";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import playlistApi from "~/api/playlistApi";
 
@@ -39,6 +40,14 @@ export const deletePlaylist = createAsyncThunk(
     }
 )
 
+export const fetchSearchResult = createAsyncThunk(
+    'playlists/fetchSearchResult',
+    async (params) => {
+        const response = await playlistApi.getAll(params)
+        return response
+    }
+)
+
 const playlistSlice = createSlice({
     name: 'playlists',
     initialState: {
@@ -49,11 +58,15 @@ const playlistSlice = createSlice({
             sub: "",
             img: "https://t.scdn.co/images/3099b3803ad9496896c43f22fe9be8c4.png"
         },
-        newPlaylistNumberOrder: 1
+        newPlaylistNumberOrder: 1,
+        searchResult: []
     },
     reducers: {
         increasePlaylistNumberOrder (state, {payload}) {
             state.newPlaylistNumberOrder = payload
+        },
+        setSearchResult (state, {payload}) {
+            state.searchResult = payload
         }
     },
     extraReducers: {
@@ -86,9 +99,15 @@ const playlistSlice = createSlice({
         },
         [deletePlaylist.rejected]: (state, { error }) => {
             console.log('rejected!', error)
+        },
+        [fetchSearchResult.fulfilled]: (state, { payload }) => {
+            state.searchResult = payload
+        },
+        [fetchSearchResult.rejected]: (state, { error }) => {
+            console.log('rejected!', error)
         }
     }
 })
 const { actions, reducer } = playlistSlice;
 export default reducer;
-export const { increasePlaylistNumberOrder } = actions;
+export const { increasePlaylistNumberOrder, setSearchResult } = actions;

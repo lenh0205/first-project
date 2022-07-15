@@ -20,6 +20,6 @@ const playlistApi = {
     updateLikedPlaylist(id, liked) {
         const url = `/playlist/${id}`
         return axiosClient.patch(url, { liked: !liked })
-    }
+    },
 }
 export default playlistApi
