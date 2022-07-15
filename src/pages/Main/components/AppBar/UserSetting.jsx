@@ -5,6 +5,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { useUserAuth } from "~/context/UserAuthContext";
+import Box from "@mui/material/Box";
 
 function UserSetting() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -28,7 +29,11 @@ function UserSetting() {
   };
 
   return (
-    <React.Fragment>
+    <Box
+      sx={{
+        display: "flex",
+      }}
+    >
       <Chip
         label="Upgrade"
         variant="outlined"
@@ -80,7 +85,7 @@ function UserSetting() {
         </MenuItem>
         <MenuItem onClick={handleLogOut}>Logout</MenuItem>
       </Menu>
-    </React.Fragment>
+    </Box>
   );
 }
 

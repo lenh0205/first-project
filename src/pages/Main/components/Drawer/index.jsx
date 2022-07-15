@@ -25,6 +25,10 @@ import {
   increasePlaylistNumberOrder,
 } from "~/pages/Main/playlistSlice.js";
 import PageNav from "./PageNav";
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
+import LibraryMusicOutlinedIcon from '@mui/icons-material/LibraryMusicOutlined';
 
 const DrawerCuz = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open" && prop !== "drawerWidth",
@@ -107,12 +111,13 @@ export default function Drawer() {
       </Toolbar>
       {/* Main List */}
       <List component="nav">
-        <PageNav to="/" primary="Home" icon={<HomeIcon />} />
-        <PageNav to="/search" primary="Search" icon={<SearchIcon />} />
+        <PageNav to="/" primary="Home" icon={<HomeOutlinedIcon/>} activeIcon={<HomeIcon />}/>
+        <PageNav to="/search" primary="Search" icon={<SearchIcon />} activeIcon={<SearchOutlinedIcon/>}/>
         <PageNav
           to="/collection"
           primary="Your Library"
-          icon={<LibraryMusicIcon />}
+          icon={<LibraryMusicOutlinedIcon/>}
+          activeIcon={<LibraryMusicIcon />}
         />
 
         <Divider sx={{ my: 1, borderColor: "transparent" }} />
@@ -134,6 +139,7 @@ export default function Drawer() {
           to="/collection/tracks"
           primary="Liked Songs"
           icon={<FavoriteBorderIcon />}
+          activeIcon={<FavoriteOutlinedIcon/>}
         />
 
         <Divider sx={{ mx: 3 }} />

@@ -25,7 +25,7 @@ const AppBarCuz = styled(MuiAppBar, {
   backgroundImage: "none",
   position: "fixed",
   ...(open && {
-    boxShadow: 'unset',
+    boxShadow: "unset",
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(["width", "margin"], {
@@ -50,15 +50,23 @@ export default function AppBar({ children }) {
   const drawerWidth = useSelector((state) => state.layout.drawerWidth);
 
   const { leftSideRef } = useMainPageContext();
+
   useEffect(() => {
-    if (leftSideRef) {
-      leftSideRef.current.onscroll = () => {
-        if (leftSideRef.current.scrollTop > 80) {
+    const leftSideElement = leftSideRef.current
+    
+    if (leftSideElement && appbarRef.current) {
+      const handelScroll = () => {
+        if (leftSideElement.scrollTop > 80) {
           appbarRef.current.style.backgroundColor = "rgb(32, 16, 96)";
         } else {
           appbarRef.current.style.backgroundColor = "rgba(32, 16, 96, 0)";
         }
-      };
+      }
+      leftSideElement.addEventListener("scroll", handelScroll);
+
+      return () => {
+        leftSideElement.removeEventListener("scroll", handelScroll)
+      }
     }
   }, [leftSideRef]);
 
@@ -66,7 +74,7 @@ export default function AppBar({ children }) {
     <AppBarCuz ref={appbarRef} open={open} drawerWidth={drawerWidth}>
       <Toolbar
         sx={{
-          pr: "24px", 
+          pr: "24px",
         }}
       >
         <Grid container>
@@ -85,7 +93,7 @@ export default function AppBar({ children }) {
               onClick={() => dispatch(toggleDrawer())}
               sx={{
                 marginRight: "36px",
-                color: theme => theme.palette.background.text,
+                color: (theme) => theme.palette.background.text,
                 ...(open && { display: "none" }),
               }}
             >
