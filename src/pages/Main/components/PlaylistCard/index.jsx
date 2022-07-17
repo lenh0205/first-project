@@ -4,19 +4,20 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import PlayButton from "~/pages/Main/components/Button/PlayButton";
-
 import React from "react";
 
 function PlaylistCard({ playlist }) {
   return (
     <Card
       sx={{
-        height: 267,
         display: "flex",
         flexDirection: "column",
         p: 2,
         position: "relative",
         backgroundColor: "background.card",
+        height: 267,
+        width: { xs: 290, md: "auto" },
+        marginRight: { xs: 3, md: 0 },
       }}
     >
       <CardMedia
@@ -27,7 +28,7 @@ function PlaylistCard({ playlist }) {
         }}
         image={playlist.img}
         alt="random"
-        onError={() => console.log('hello')}
+        onError={() => console.log("hello")}
       />
       <CardContent sx={{ p: 0 }}>
         <Typography
